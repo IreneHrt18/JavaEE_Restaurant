@@ -1,19 +1,17 @@
 package Bean;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 public class User {
 	private String USERNAME;
 	private String PASSWORD;
 	private String ICONURL;
 	private String PHONENUM;
 	private String CUSNOTE;	
-	private BigDecimal USERNO;
+	private String USERNO;
 	
 
-public BigDecimal getUSERNO() {
+public String getUSERNO() {
 	return USERNO;
 }
-public void setUSERNO(BigDecimal uSERNO) {
+public void setUSERNO(String uSERNO) {
 	USERNO = uSERNO;
 }
 public String getUSERNAME() {

@@ -1,16 +1,16 @@
 package Bean;
 import java.math.BigDecimal;
 public class Dish {
-	private BigDecimal DISHNO;
+	private String DISHNO;
 	private String DISHNAME;
 	private String DESCRIPTION;
 	private String IMG;
 	private BigDecimal  PRICE;
 	
-public BigDecimal getDISHNO() {
+public String getDISHNO() {
 		return DISHNO;
 	}
-	public void setDISHNO(BigDecimal dISHNO) {
+	public void setDISHNO(String dISHNO) {
 		DISHNO = dISHNO;
 	}
 	public String getDISHNAME() {

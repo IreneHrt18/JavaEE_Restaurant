@@ -3,22 +3,22 @@ import java.math.BigDecimal;
 import java.util.Date;
 public class Order {
 	
-	private BigDecimal ORDERNO;
-	private BigDecimal USERNO;
+	private String ORDERNO;
+	private String USERNO;
 	private BigDecimal PRICE;
 	private Date		TIME;
 	private BigDecimal	ORDERSTATE;
 	
-	public BigDecimal getORDERNO() {
+	public String getORDERNO() {
 		return ORDERNO;
 	}
-	public void setORDERNO(BigDecimal oRDERNO) {
+	public void setORDERNO(String oRDERNO) {
 		ORDERNO = oRDERNO;
 	}
-	public BigDecimal getUSERNO() {
+	public String getUSERNO() {
 		return USERNO;
 	}
-	public void setUSERNO(BigDecimal uSERNO) {
+	public void setUSERNO(String uSERNO) {
 		USERNO = uSERNO;
 	}
 	public BigDecimal getPRICE() {
