@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class DAOFactory {
 	public static Object newInstance(String interfaceClassName) {
-		InputStream is = DAOFactory.class.getResourceAsStream("./DAO.property");
+		InputStream is = DAOFactory.class.getResourceAsStream("DAO.property");
 		Properties properties = new Properties();
 		try {
 			properties.load(is);
