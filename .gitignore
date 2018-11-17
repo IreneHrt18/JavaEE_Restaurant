@@ -2,5 +2,6 @@
 /UseCase/
 /DataBase/
 .classpath
-dbconfig.property
+src/JDBC/dbconfig.property
 .gitignore
+.project
