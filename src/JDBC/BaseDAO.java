@@ -4,23 +4,42 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public abstract class BaseDAO {
+	/**
+	 * 不带参数的查询
+	 * @param sql
+	 * @param clazz
+	 * @return
+	 */
 	@SuppressWarnings("rawtypes")
 	public abstract ArrayList searchOBJ(String sql,Class clazz);
 	@SuppressWarnings("rawtypes")
-	public abstract ArrayList searchOBJ(String sql , Object[] params, Class clazz);
-	public abstract Object mapping(ResultSet rSet,Class<Object> clazz);
 	/**
-	 * 一个语句多种参数
+	 * 带参数的查询
 	 * @param sql
 	 * @param params
+	 * @param clazz
 	 * @return
+	 */
+	public abstract ArrayList searchOBJ(String sql , Object[] params, Class clazz);
+	/**
+	 * 部署查询语句
+	 * @param rSet
+	 * @param clazz
+	 * @return
+	 */
+	public abstract Object mapping(ResultSet rSet,Class<Object> clazz);
+	/**
+	 * 执行一个语句多种参数
+	 * @param sql
+	 * @param params
+	 * @return返回成功修改的行数
 	 */
 	public abstract int singleSQL(String sql,Object[] params);
 	/**
 	 * 只有一种参数执行多次
 	 * @param sql
 	 * @param params
-	 * @return
+	 * @return成功修改的行数数组
 	 */
 	public abstract int[] multipleSQL(String sql,Object[] params);
 	/**
