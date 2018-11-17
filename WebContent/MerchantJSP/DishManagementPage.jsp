@@ -31,7 +31,7 @@
 		}
 		//绑定事件
 		$(function () {
-			$(document).on("click", "[type=button]", function () {
+			$(document).on("click", "#searchButton", function () {
 				var url = "../DishServlet?action=search&searchText=" + $("[type=search]").val();
 				var listText = "";
 				$.getJSON(url, function (data, textstatus, jqxhr) {

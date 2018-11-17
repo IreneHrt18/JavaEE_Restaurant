@@ -9,6 +9,12 @@ import JDBC.BaseDAOIMPL;
 
 public class DishIMPL implements SearchDAO {
 
+	@Override
+	public ArrayList searchAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	@SuppressWarnings("rawtypes")
 	@Override
 	public ArrayList searchByPrimaryKey(String[] params) {

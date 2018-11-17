@@ -10,4 +10,5 @@ public interface SearchDAO {
 	 */
 	@SuppressWarnings("rawtypes")
 	public ArrayList searchByPrimaryKey(String[] params);
+	public ArrayList searchAll();
 }
