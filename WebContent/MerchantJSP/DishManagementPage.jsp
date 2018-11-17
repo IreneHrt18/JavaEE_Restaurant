@@ -14,9 +14,10 @@
 	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
 	<script type="text/javascript">
 		//初始化页面
-		$(document).ready(function(){
-			var url = ""
-		});
+// 		$(document).ready(function(){
+// 			var url = "../DishServlet?action=search";
+			
+// 		});
 		
 		//获得需要添加的html代码
 		function getListText(item) {
@@ -31,7 +32,7 @@
 		}
 		//绑定事件
 		$(function () {
-			$(document).on("click", "[type=button]", function () {
+			$(document).on("click","#searchButton", function () {
 				var url = "../DishServlet?action=search&searchText=" + $("[type=search]").val();
 				var listText = "";
 				$.getJSON(url, function (data, textstatus, jqxhr) {
@@ -45,7 +46,6 @@
 				})
 			})
 		})
-
 	</script>
 
 </head>
@@ -79,7 +79,7 @@
 			</tr>
 		</thead>
 		<tbody id="dishlist">
-
+				
 		</tbody>
 	</table>
 </body>

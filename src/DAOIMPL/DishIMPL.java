@@ -19,4 +19,15 @@ public class DishIMPL implements SearchDAO {
 		return list;
 	}
 
+	@SuppressWarnings("rawtypes")
+	@Override
+	public ArrayList searchByPage(int currentPage, int pageSize) {
+		// TODO Auto-generated method stub
+		String sql = "select * from (select rownum as r,t1.* from dish t1 where rownum < ?) t2 where t2.r >= ?";
+		BaseDAO basedao =new BaseDAOIMPL();
+		Integer[] params = {currentPage*pageSize+1,(currentPage-1)*pageSize+1};
+		ArrayList list = basedao.searchOBJ(sql, params, Dish.class);
+		return list;
+	}
+
 }

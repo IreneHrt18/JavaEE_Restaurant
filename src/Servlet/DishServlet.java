@@ -39,6 +39,7 @@ public class DishServlet extends HttpServlet {
 		switch (action) {
 		case "search":
 			String DishNo = request.getParameter("searchText");
+			response.setCharacterEncoding("utf-8");
 			response.getWriter().println(searchByDishNo(DishNo));
 			break;
 		default:
@@ -55,8 +56,12 @@ public class DishServlet extends HttpServlet {
 		//通过接口获得查询后的dishlist
 		ArrayList<Dish> list = new ArrayList<>();
 		SearchDAO searchDAO = new DishIMPL();
-		String[] params = {DishNo};
-		list = (ArrayList<Dish>)searchDAO.searchByPrimaryKey(params);
+		if(DishNo!=null){
+			String[] params = {DishNo};
+			list = (ArrayList<Dish>)searchDAO.searchByPrimaryKey(params);
+		}else{
+			//list = (ArrayList<Dish>)searchDAO.searchByPage(currentPage, pageSize);
+		}
 		//将dishlist转换成json数组
 		JSONArray jsonArray = new JSONArray();
 		for(int i =0;i<list.size();i++) {
