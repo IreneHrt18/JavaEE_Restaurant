@@ -21,12 +21,13 @@ import net.sf.json.JSONObject;
 @WebServlet("/DishServlet")
 public class DishServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private String printString;
     /**
      * @see HttpServlet#HttpServlet()
      */
     public DishServlet() {
         super();
+        this.printString = null;
         // TODO Auto-generated constructor stub
     }
 
@@ -38,16 +39,21 @@ public class DishServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		switch (action) {
 		case "search":
-			String DishNo = request.getParameter("searchText");
-			response.setCharacterEncoding("utf-8");
-			response.getWriter().println(searchByDishNo(DishNo));
+			printString = searchByDishNo(request.getParameter("searchText"));
+			break;
+		case "showByPage":
+			String currentPage = request.getParameter("currentPage");
+			String pageSize = request.getParameter("pageSize");
+			printString = searchByPage(currentPage, pageSize);
 			break;
 		default:
 			break;
 		}
+		response.setContentType("text/html;chatset=UTF-8");
+		response.getWriter().println(printString);
 	}
 	/**
-	 * 
+	 * 通过编号查询菜品
 	 * @param DishNo
 	 * @return
 	 */
@@ -59,10 +65,20 @@ public class DishServlet extends HttpServlet {
 		if(DishNo!=null){
 			String[] params = {DishNo};
 			list = (ArrayList<Dish>)searchDAO.searchByPrimaryKey(params);
-		}else{
-			//list = (ArrayList<Dish>)searchDAO.searchByPage(currentPage, pageSize);
 		}
 		//将dishlist转换成json数组
+		JSONArray jsonArray = new JSONArray();
+		for(int i =0;i<list.size();i++) {
+			jsonArray.add(JSONObject.fromObject(list.get(i)));
+		}
+		return jsonArray.toString();
+	}
+	@SuppressWarnings("unchecked")
+	private String searchByPage(String currentPage,String pageSize) {
+		int current = Integer.parseInt(currentPage);
+		int size = Integer.parseInt(pageSize);
+		SearchDAO searchDAO = new DishIMPL();
+		ArrayList<Dish> list = searchDAO.searchByPage(current, size);
 		JSONArray jsonArray = new JSONArray();
 		for(int i =0;i<list.size();i++) {
 			jsonArray.add(JSONObject.fromObject(list.get(i)));

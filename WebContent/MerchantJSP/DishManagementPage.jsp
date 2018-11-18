@@ -14,11 +14,19 @@
 	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
 	<script type="text/javascript">
 		//初始化页面
-// 		$(document).ready(function(){
-// 			var url = "../DishServlet?action=search";
+		$(document).ready(function(){
+			var url = "../DishServlet?action=showByPage&currentPage=1&pageSize=6";
+			var listText ="";
+			$.getJSON(url,function(data,textstatus,jqxhr){
+				if(data!=null){
+					$.each(data,function(index,item){
+						listText += getListText(item);
+					});
+				}
+				$("#dishlist").html(listText);
+			});
 			
-// 		});
-		
+		});
 		//获得需要添加的html代码
 		function getListText(item) {
 			var text = "<tr>" +
@@ -41,7 +49,8 @@
 							listText += getListText(item);
 						})
 						$("#dishlist").html(listText);
-						$("[type=search]").val("");
+					}else{
+						$("#dishlist").html("未找到对应菜品");
 					}
 				})
 			})
