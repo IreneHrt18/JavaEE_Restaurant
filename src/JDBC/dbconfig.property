@@ -1,4 +1,4 @@
 Driver=oracle.jdbc.driver.OracleDriver
 url=jdbc:oracle:thin:@localhost:1521:orcl
-username=JAVAEE
-password=1228
+username=c##sa
+password=123456
