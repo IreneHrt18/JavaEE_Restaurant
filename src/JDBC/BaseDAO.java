@@ -5,16 +5,16 @@ import java.util.ArrayList;
 
 public abstract class BaseDAO {
 	/**
-	 * ²»´ø²ÎÊıµÄ²éÑ¯
+	 * æŸ¥è¯¢ä¸å¸¦å‚æ•°
 	 * @param sql
 	 * @param clazz
-	 * @return
+	 * @return ArrayList
 	 */
 	@SuppressWarnings("rawtypes")
 	public abstract ArrayList searchOBJ(String sql,Class clazz);
 	@SuppressWarnings("rawtypes")
 	/**
-	 * ´ø²ÎÊıµÄ²éÑ¯
+	 * æŸ¥è¯¢å¸¦å‚æ•°
 	 * @param sql
 	 * @param params
 	 * @param clazz
@@ -22,49 +22,49 @@ public abstract class BaseDAO {
 	 */
 	public abstract ArrayList searchOBJ(String sql , Object[] params, Class clazz);
 	/**
-	 * ²¿Êğ²éÑ¯Óï¾ä
+	 * éƒ¨ç½²
 	 * @param rSet
 	 * @param clazz
-	 * @return
+	 * @return Object
 	 */
 	public abstract Object mapping(ResultSet rSet,Class<Object> clazz);
 	/**
-	 * Ö´ĞĞÒ»¸öÓï¾ä¶àÖÖ²ÎÊı
+	 * æ‰§è¡Œå•ä¸ªè¯­å¥ï¼Œå¤šä¸ªå‚æ•°
 	 * @param sql
 	 * @param params
-	 * @return·µ»Ø³É¹¦ĞŞ¸ÄµÄĞĞÊı
+	 * @return integer
 	 */
 	public abstract int singleSQL(String sql,Object[] params);
 	/**
-	 * Ö»ÓĞÒ»ÖÖ²ÎÊıÖ´ĞĞ¶à´Î
+	 * Ö»æ‰§è¡Œå¤šä¸ªè¯­å¥ï¼ŒåŒç§å‚æ•°
 	 * @param sql
 	 * @param params
-	 * @return³É¹¦ĞŞ¸ÄµÄĞĞÊıÊı×é
+	 * @return integer[]
 	 */
 	public abstract int[] multipleSQL(String sql,Object[] params);
 	/**
-	 * ¶àÖÖ²ÎÊıÖ´ĞĞ¶à´Î
-	 * arralistÖĞ´æ´¢ÁË¶àÖÖ²ÎÊıµÄÊı×é
+	 * è·å¾—æ‰§è¡Œè¯­å¥åçš„ç¬¬ä¸€ä¸ªå€¼
 	 * @param sql
 	 * @param params
+	 * @return Object
 	 */
-	public abstract int[] multipleParam(String sql,ArrayList<Object[]> params);
-	/**
-	 * »ñÈ¡Ö´ĞĞÓï¾äºóµÄ½á¹ûÊıÁ¿
-	 * @param sql
-	 * @param params
-	 * @return
-	 */
-	public abstract int getCount(String sql,Object[] params);
+	public abstract Object getCount(String sql,Object[] params);
 	
 	
 	/**
-	 * Ä£ºı²éÑ¯
+	 * æ¨¡ç³ŠæŸ¥è¯¢
 	 * @param sql
 	 * @param param
 	 * @param clazz
-	 * @return
+	 * @return arralist
 	 */
 	@SuppressWarnings("rawtypes")
 	public abstract ArrayList fuzzyQuery(String sql,String param,Class clazz);
+	/**
+	 * æ‰§è¡Œå¤šæ¡è¯­å¥ï¼Œå‚æ•°åªæœ‰ä¸€ç§ï¼Œè·å¾—æ¯æ¡è¯­å¥æ‰§è¡Œåçš„ç¬¬ä¸€ä¸ªå€¼çš„æ•°é‡
+	 * @param colunm
+	 * @param value
+	 * @return
+	 */
+	public abstract Object[] getMuiltCountByParams(String sql,Object[] value);
 }

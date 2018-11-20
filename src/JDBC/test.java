@@ -3,26 +3,30 @@ package JDBC;
 import java.util.ArrayList;
 
 import Bean.Dish;
+import Bean.PageModel;
 import DAO.SearchDAO;
-import DAOIMPL.DishIMPL;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import DAO.SortDAO;
 
 public class test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		// 通过接口获得查询后的dishlist
-		ArrayList<Dish> list = new ArrayList<>();
-		SearchDAO searchDAO = new DishIMPL();
-		String[] params = { "2" };
-		list = (ArrayList<Dish>) searchDAO.searchByPrimaryKey(params);
-		// 将dishlist转换成json数组
-		JSONArray jsonArray = new JSONArray();
-		for (int i = 0; i < list.size(); i++) {
-			jsonArray.add(JSONObject.fromObject(list.get(i)));
+		SearchDAO searchDAO = (SearchDAO)DAOFactory.newInstance("Dish");
+		ArrayList<Dish> list = (ArrayList<Dish>)searchDAO.searchByPage(1, PageModel.getPageSize());
+		if(true) {
+			SortDAO sortDAO = (SortDAO)DAOFactory.newInstance("Dish");
+			Dish[] dishs = new Dish[list.size()];
+			list.toArray(dishs);
+			for(int i = 0;i<dishs.length;i++) {
+				System.out.println(dishs[i].toString());
+			}
+			System.out.println("*****************");
+			list.clear();
+			list.addAll(sortDAO.descSort(dishs));
+			for(int i = 0;i<list.size();i++) {
+				System.out.println(list.get(i).toString());
+			}
 		}
-
 	}
 
 }

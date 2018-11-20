@@ -37,5 +37,10 @@ public String getDISHNO() {
 	public void setPRICE(BigDecimal pRICE) {
 		PRICE = pRICE;
 	}
+	@Override
+	public String toString() {
+		return "Dish [DISHNO=" + DISHNO + ", DISHNAME=" + DISHNAME + ", DESCRIPTION=" + DESCRIPTION + ", IMG=" + IMG
+				+ ", PRICE=" + PRICE + "]";
+	}
 
 }

@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Bean.Dish;
+import Bean.PageModel;
 import DAO.SearchDAO;
-import DAOIMPL.DishIMPL;
+import DAO.SortDAO;
+import JDBC.DAOFactory;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -39,51 +41,91 @@ public class DishServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		switch (action) {
 		case "search":
-			printString = searchByDishNo(request.getParameter("searchText"));
+			printString = searchByDishNo(request.getParameter("searchText"),false);
 			break;
-		case "showByPage":
-			String currentPage = request.getParameter("currentPage");
-			String pageSize = request.getParameter("pageSize");
-			printString = searchByPage(currentPage, pageSize);
+		case "getPageModel":
+			printString = getPageModel(request,response);
+			break;
+		case "searchByPage":
+			printString = searchByPage(request, response,false);
+			break;
+		case "searchByPageAndSort":
+			printString = searchByPage(request, response,true);
+			break;
+		case "searchAndSort":
+			printString = searchByDishNo(request.getParameter("searchText"),true);
 			break;
 		default:
 			break;
 		}
-		response.setContentType("text/html;chatset=UTF-8");
+		response.setCharacterEncoding("utf-8");
 		response.getWriter().println(printString);
 	}
+	
 	/**
-	 * ͨ����Ų�ѯ��Ʒ
-	 * @param DishNo
-	 * @return
+	 * 通过页面查询
+	 * @param request
+	 * @param response
+	 * @return string
 	 */
 	@SuppressWarnings("unchecked")
-	private String searchByDishNo(String DishNo) {
-		//ͨ���ӿڻ�ò�ѯ���dishlist
-		ArrayList<Dish> list = new ArrayList<>();
-		SearchDAO searchDAO = new DishIMPL();
-		if(DishNo!=null){
-			String[] params = {DishNo};
-			list = (ArrayList<Dish>)searchDAO.searchByPrimaryKey(params);
+	public String searchByPage(HttpServletRequest request,HttpServletResponse response,boolean isSort) {
+		SearchDAO searchDAO = (SearchDAO)DAOFactory.newInstance("Dish");
+		//查询页面第一页的所有菜品信息
+		int currenPage = Integer.parseInt(request.getParameter("currentPage"));
+		ArrayList<Dish> list = (ArrayList<Dish>)searchDAO.searchByPage(currenPage, PageModel.getPageSize());
+		if(isSort) {
+			SortDAO sortDAO = (SortDAO)DAOFactory.newInstance("Dish");
+			Dish[] dishs = (Dish[])list.toArray();
+			list.clear();
+			list.addAll(sortDAO.descSort(dishs));
 		}
-		//��dishlistת����json����
 		JSONArray jsonArray = new JSONArray();
 		for(int i =0;i<list.size();i++) {
 			jsonArray.add(JSONObject.fromObject(list.get(i)));
 		}
 		return jsonArray.toString();
 	}
+	/**
+	 * 通过编号查询
+	 * @param DishNo
+	 * @return 一组json对象的字符串
+	 */
 	@SuppressWarnings("unchecked")
-	private String searchByPage(String currentPage,String pageSize) {
-		int current = Integer.parseInt(currentPage);
-		int size = Integer.parseInt(pageSize);
-		SearchDAO searchDAO = new DishIMPL();
-		ArrayList<Dish> list = searchDAO.searchByPage(current, size);
+	private String searchByDishNo(String DishNo,boolean isSort) {
+		//获取dishlist
+		ArrayList<Dish> list = new ArrayList<>();
+		SearchDAO searchDAO = (SearchDAO)DAOFactory.newInstance("Dish");
+		if(DishNo!=null){
+			list = (ArrayList<Dish>)searchDAO.fuzzyQuery("dishno", DishNo);
+		}
+		if(isSort) {
+			SortDAO sortDAO = (SortDAO)DAOFactory.newInstance("Dish");
+			Dish[] dishs = (Dish[])list.toArray();
+			list.clear();
+			list.addAll(sortDAO.descSort(dishs));
+		}
+		
+		//将list转换成json对象
 		JSONArray jsonArray = new JSONArray();
 		for(int i =0;i<list.size();i++) {
 			jsonArray.add(JSONObject.fromObject(list.get(i)));
 		}
 		return jsonArray.toString();
+	}
+	/**
+	 * 获得pagemodel
+	 * @param currentPage
+	 * @param pageSize
+	 * @return 一组json对象的字符串
+	 */
+	private String getPageModel(HttpServletRequest request,HttpServletResponse response) {
+		SearchDAO searchDAO = (SearchDAO)DAOFactory.newInstance("Dish");
+		//分页信息
+		PageModel pageModel = new PageModel(searchDAO.getCount());
+		JSONObject jsonObject = JSONObject.fromObject(pageModel);
+		request.setAttribute("DishPageModel", pageModel);
+		return jsonObject.toString();
 	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
