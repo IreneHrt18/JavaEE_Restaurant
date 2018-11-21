@@ -1,3 +1,4 @@
+<%@page import="Bean.PageModel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,42 +12,17 @@
 	<title>菜品信息</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 	 crossorigin="anonymous">
-	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
-	<script type="text/javascript">
-		//初始化页面
-		$(document).ready(function(){
-			var url = ""
-		});
-		
-		//获得需要添加的html代码
-		function getListText(item) {
-			var text = "<tr>" +
-				"<td scope='row'>" + item.DISHNO + "</td>" +
-				"<td>" + item.DISHNAME + "</td>" +
-				"<td>" + item.PRICE + "</td>" +
-				"<td>" + item.DESCRIPTION + "</td>" +
-				"<td><img src= " + item.IMG + " width='50px' height='50px'></td>" +
-				"</tr>";
-			return text;
-		}
-		//绑定事件
-		$(function () {
-			$(document).on("click", "#searchButton", function () {
-				var url = "../DishServlet?action=search&searchText=" + $("[type=search]").val();
-				var listText = "";
-				$.getJSON(url, function (data, textstatus, jqxhr) {
-					if (data != null) {
-						$.each(data, function (index, item) {
-							listText += getListText(item);
-						})
-						$("#dishlist").html(listText);
-						$("[type=search]").val("");
-					}
-				})
-			})
-		})
+	
+	 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js" type="text/javascript" charset="UTF-8"></script>
+	<script src="./DishManagementPageJS.js" charset="UTF-8" type="text/javascript">	</script>
+	
+	<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	 crossorigin="anonymous"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+	 crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+	 crossorigin="anonymous"></script>
 
-	</script>
 
 </head>
 
@@ -54,7 +30,6 @@
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active"><a class="nav-link" href="homepage.html">订单信息<span class="sr-only">(current)</span></a>
 				</li>
@@ -82,6 +57,19 @@
 
 		</tbody>
 	</table>
+	<div class="xx">
+		<button class="prevPage">上一页</button>
+		<%PageModel pageModel = new PageModel(3); %>
+		<%  for(int i = 0;i<pageModel.getTotalPageNum();i++){ %>
+		<button class="pageButton" value="<%=i+1 %>">
+			<%=i+1 %> </button>
+		<% if(i==0||i==pageModel.getTotalPageNum()-2){ %>
+		<span>...</span>
+		<% } %>
+		<% } %>
+		<button class="nextPage">下一页</button>
+	</div>
 </body>
+
 
 </html>
