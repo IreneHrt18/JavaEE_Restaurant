@@ -32,4 +32,34 @@ public class OrderIMPL implements SearchDAO {
 		ArrayList list = baseDAO.searchOBJ(sql,params, Dish.class);
 		return list;	
     }
+
+	@Override
+	public ArrayList searchByPage(int currentPage, int pageSize) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getCountByParam(String colunm, String value) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ArrayList fuzzyQuery(String colunm, String value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int[] getMuiltCountByParams(String colunm, String[] value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
