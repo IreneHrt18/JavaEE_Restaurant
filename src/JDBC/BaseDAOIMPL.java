@@ -8,13 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
 public class BaseDAOIMPL extends BaseDAO {
 
-	/**
-	 * 
-	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public ArrayList searchOBJ(String sql,Class clazz) {
+	public ArrayList searchOBJ(String sql, Class clazz) {
 		// TODO Auto-generated method stub
 		Connection connection = Helper.getConnection();
 		ResultSet resultSet = null;
@@ -25,7 +23,8 @@ public class BaseDAOIMPL extends BaseDAO {
 			resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				Object object = this.mapping(resultSet, clazz);
-				if(object!=null)list.add(object);
+				if (object != null)
+					list.add(object);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -34,21 +33,19 @@ public class BaseDAOIMPL extends BaseDAO {
 		Helper.free(resultSet, pStatement, connection);
 		return list;
 	}
-	/**
-	 * 
-	 */
+
 	public Object mapping(ResultSet rSet, Class<Object> clazz) {
 		// TODO Auto-generated method stub
 		try {
 			Object object = clazz.newInstance();
 			Method[] methods = clazz.getMethods();
 			ResultSetMetaData metaData = rSet.getMetaData();
-			for(int i = 0;i < metaData.getColumnCount();i++) {
+			for (int i = 0; i < metaData.getColumnCount(); i++) {
 				StringBuffer value = new StringBuffer("set");
-				value.append(metaData.getColumnLabel(i+1));
-				for(Method method:methods) {
-					if(method.getName().equals(value.toString())) {
-						method.invoke(object, rSet.getObject(i+1));
+				value.append(metaData.getColumnLabel(i + 1));
+				for (Method method : methods) {
+					if (method.getName().equals(value.toString())) {
+						method.invoke(object, rSet.getObject(i + 1));
 					}
 				}
 			}
@@ -72,22 +69,15 @@ public class BaseDAOIMPL extends BaseDAO {
 		return null;
 	}
 
-	/**
-	 *执行单个sql语句，多种参数
-	 * @param sql
-	 * @param params[]
-	 * @return 成功修改的行数
-	 * @throws SQLException
-	 */
-	public int singleSQL(String sql,Object[] params) {
+	public int singleSQL(String sql, Object[] params) {
 		Connection connection = Helper.getConnection();
 		PreparedStatement pStatement;
 		int count = 0;
 		try {
 			pStatement = connection.prepareStatement(sql);
-			if(params!=null) {
-				for(int i = 0;i < params.length;i++) {
-					pStatement.setObject(i+1, params[i]);
+			if (params != null) {
+				for (int i = 0; i < params.length; i++) {
+					pStatement.setObject(i + 1, params[i]);
 				}
 			}
 			count = pStatement.executeUpdate();
@@ -98,9 +88,7 @@ public class BaseDAOIMPL extends BaseDAO {
 		}
 		return count;
 	}
-	/**
-	 * 
-	 */
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public ArrayList searchOBJ(String sql, Object[] params, Class clazz) {
@@ -111,15 +99,16 @@ public class BaseDAOIMPL extends BaseDAO {
 		ArrayList<Object> list = new ArrayList<>();
 		try {
 			pStatement = connection.prepareStatement(sql);
-			if(params!=null) {
-				for(int i=0; i<params.length;i++) {
-					pStatement.setObject(i+1, params[i]);
+			if (params != null) {
+				for (int i = 0; i < params.length; i++) {
+					pStatement.setObject(i + 1, params[i]);
 				}
 			}
 			resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				Object object = this.mapping(resultSet, clazz);
-				if(object!=null)list.add(object);
+				if (object != null)
+					list.add(object);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -128,9 +117,7 @@ public class BaseDAOIMPL extends BaseDAO {
 		Helper.free(resultSet, pStatement, connection);
 		return list;
 	}
-	/***
-	 * 
-	 */
+
 	@Override
 	public int[] multipleSQL(String sql, Object[] params) {
 		// TODO Auto-generated method stub
@@ -139,9 +126,9 @@ public class BaseDAOIMPL extends BaseDAO {
 		int[] value = null;
 		try {
 			pStatement = connection.prepareStatement(sql);
-			if(params!=null) {
-				for(int i = 0;i<params.length;i++) {
-					pStatement.setObject(i+1, params[i]);
+			if (params != null) {
+				for (int i = 0; i < params.length; i++) {
+					pStatement.setObject(i + 1, params[i]);
 					pStatement.addBatch();
 				}
 			}
@@ -153,23 +140,24 @@ public class BaseDAOIMPL extends BaseDAO {
 		Helper.free(null, pStatement, connection);
 		return value;
 	}
+
 	@Override
-	public int getCount(String sql, Object[] params) {
+	public Object getCount(String sql, Object[] params) {
 		// TODO Auto-generated method stub
 		Connection connection = Helper.getConnection();
 		PreparedStatement pStatement = null;
 		ResultSet rSet = null;
-		int value = 0;
+		Object value = null;
 		try {
 			pStatement = connection.prepareStatement(sql);
-			if (params!=null) {
-				for(int i = 0;i<params.length;i++) {
-					pStatement.setObject(i+1, params[i]);
+			if (params != null) {
+				for (int i = 0; i < params.length; i++) {
+					pStatement.setObject(i + 1, params[i]);
 				}
 			}
 			rSet = pStatement.executeQuery();
 			while (rSet.next()) {
-				value = rSet.getInt(1);
+				value = rSet.getObject(1);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -189,11 +177,12 @@ public class BaseDAOIMPL extends BaseDAO {
 		ArrayList<Object> list = new ArrayList<>();
 		try {
 			pStatement = connection.prepareStatement(sql);
-			pStatement.setObject(1, "%"+param+"%");
+			pStatement.setObject(1, "%" + param + "%");
 			resultSet = pStatement.executeQuery();
 			while (resultSet.next()) {
 				Object object = this.mapping(resultSet, clazz);
-				if(object!=null)list.add(object);
+				if (object != null)
+					list.add(object);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -202,32 +191,29 @@ public class BaseDAOIMPL extends BaseDAO {
 		Helper.free(resultSet, pStatement, connection);
 		return list;
 	}
+
 	@Override
-	public int[] multipleParam(String sql, ArrayList<Object[]> params) {
+	public Object[] getMuiltCountByParams(String sql, Object[] value) {
 		// TODO Auto-generated method stub
 		Connection connection = Helper.getConnection();
 		PreparedStatement pStatement = null;
-		int[] value = null;
+		ResultSet rSet = null;
+		Object[] rets = new Object[value.length];
 		try {
 			pStatement = connection.prepareStatement(sql);
-			for(int i = 0;i<params.size();i++) {
-				Object[] values = params.get(i);
-				if(values!= null) {
-					for(int j = 0;j<values.length;j++) {
-						pStatement.setObject(j+1, values[j]);
-					}
-					pStatement.addBatch();
+			for (int i = 0; i < value.length; i++) {
+				pStatement.setObject(1, value[i]);
+				rSet = pStatement.executeQuery();
+				while (rSet.next()) {
+					rets[i] = rSet.getObject(1);
 				}
 			}
-			value = pStatement.executeBatch();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Helper.free(null, pStatement, connection);
-		return value;
+		Helper.free(rSet, pStatement, connection);
+		return rets;
 	}
-
-
 
 }

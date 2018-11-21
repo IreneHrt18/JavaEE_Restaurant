@@ -1,108 +1,54 @@
 package Bean;
 
-import java.util.ArrayList;
-
 public class PageModel {
 	private int currentPageNum;
 	private int totalPageNum;
-	private  int pageSize;
-	private boolean isSelect;
-	@SuppressWarnings("rawtypes")
-	private ArrayList list;
-	/**
-	 * 构造函数
-	 * @param currentPageNum
-	 * @param totalPageNum
-	 * @param pageSize
-	 * @param list
-	 */
-	@SuppressWarnings("rawtypes")
-	public PageModel(int currentPageNum,int totalPageNum,int pageSize,ArrayList list) {
+	private static int pageSize;
+	private int totalCount;
+	private int pageGap;
+	static {
+		pageSize = 6;
+	}
+	
+	public PageModel(int count) {
 		// TODO Auto-generated constructor stub
-		this.currentPageNum =currentPageNum;
-		this.totalPageNum = totalPageNum;
-		this.pageSize = pageSize;
-		this.list = list;
-		this.isSelect = false;
+		this.currentPageNum = 1;
+		this.pageGap = 1;
+		this.totalCount = count;
+		this.totalPageNum = (pageSize+count -1)/pageSize ;
 	}
-	/**
-	 * 获得下一页
-	 * @return
-	 */
-	public int getNext() {
-		if (currentPageNum < getTotalPageNum()) {
-			return currentPageNum + 1;
-		} else {
-			return getTotalPageNum();
-		}
-	}
-	/**
-	 * 获得上一页
-	 * @return
-	 */
-	public int getPrev() {
-		if (currentPageNum > 1) {
-			return currentPageNum - 1;
-		} else
-			return 1;
-	}
-	/**
-	 * 首页
-	 * @return
-	 */
-	public int getTop() {
-		return 1;
-	}
-	/**
-	 * 尾页
-	 * @return
-	 */
-	public int getBottom() {
-		return getTotalPageNum();
-	}
-	/**
-	 * 当前页
-	 * @return
-	 */
 	public int getCurrentPageNum() {
 		return currentPageNum;
 	}
-
 	public int getTotalPageNum() {
 		return totalPageNum;
 	}
-
-	public int getPageSize() {
+	public static int getPageSize() {
 		return pageSize;
 	}
-
-	@SuppressWarnings("rawtypes")
-	public ArrayList getList() {
-		return list;
-	}
-
 	public void setCurrentPageNum(int currentPageNum) {
 		this.currentPageNum = currentPageNum;
 	}
-
 	public void setTotalPageNum(int totalPageNum) {
 		this.totalPageNum = totalPageNum;
 	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
+	public static void setPageSize(int pageSize) {
+		PageModel.pageSize = pageSize;
+	}
+	public int getTotalCount() {
+		return totalCount;
+	}
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
+	public int getPageGap() {
+		return pageGap;
+	}
+	public void setPageGap(int pageGap) {
+		this.pageGap = pageGap;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void setList(ArrayList list) {
-		this.list = list;
-	}
-
-	public boolean isSelect() {
-		return isSelect;
-	}
-
-	public void setSelect(boolean isSelect) {
-		this.isSelect = isSelect;
-	}
+	
+	
+	
 }
