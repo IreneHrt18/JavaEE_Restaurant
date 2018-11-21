@@ -59,4 +59,10 @@ public class DishOrderIMPL implements SearchDAO {
 		return num;
 	}
 
+	@Override
+	public ArrayList searchAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
