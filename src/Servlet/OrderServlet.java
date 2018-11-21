@@ -1,8 +1,10 @@
 package Servlet;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,6 +47,23 @@ public class OrderServlet extends HttpServlet {
 		}
 		return jsonArray.toString();
 	}
+	//跳转到订单详情界面
+	private Order searchOrder(String OrderNo){
+		ArrayList<Order> list = new ArrayList<>();
+		SearchDAO searchDAO = new OrderIMPL();
+		String[] params = {OrderNo};
+		list = (ArrayList<Order>)searchDAO.searchByPrimaryKey(params);
+		Order order=list.get(0);
+		return order;
+	}
+	//显示订单所有菜品
+	private ArrayList<Dish> searchDishOfOrder(String OrderNo){
+		ArrayList<Dish> list = new ArrayList<>();
+		OrderIMPL orderDAO=new OrderIMPL();
+		String []params= {OrderNo};
+		list=orderDAO.searchDishOfOrder(params);
+		return list; 
+	}
 	//查询所有订单
 	private String searchAllOrders() {
 		ArrayList<Order> list = new ArrayList<>();
@@ -63,13 +82,30 @@ public class OrderServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String action = request.getParameter("action");
+		String ordernumber = null;
 		switch (action) {
+		//按照主键查询订单信息。
 		case "search":
 			String OrderNo = request.getParameter("searchText");
 			response.getWriter().println(searchByDishNo(OrderNo));			
 			break;
+		//初始化加载所有订单信息。
 		case "load":
-			response.getWriter().println(searchAllOrders());			
+			response.getWriter().println(searchAllOrders());
+			break;
+		case "statement":
+			//获取查询订单号
+			ordernumber=request.getParameter("ordernumber");
+			Order order=searchOrder(ordernumber);
+            request.setAttribute("order", order);
+            //获取订单详情
+            ArrayList<Dish> list=searchDishOfOrder(ordernumber);
+            request.setAttribute("dishlist", list);
+            //跳转到订单详情界面。
+        	RequestDispatcher rDispatcher=request.getRequestDispatcher("./MerchantJSP/OrderStatement.jsp");
+        	rDispatcher.forward(request, response);	
+			break;
+
 		default:
 			break;
 		}

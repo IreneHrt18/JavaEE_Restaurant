@@ -26,5 +26,10 @@ public class OrderIMPL implements SearchDAO {
 		ArrayList list = baseDAO.searchOBJ(sql,null, Order.class);
 		return list;
 	}
-
+    public ArrayList<Dish> searchDishOfOrder(String[] params){
+		BaseDAO baseDAO = new BaseDAOIMPL();
+		String sql = "select * from dish where dishNo in(select dishNO from order_dish where orderNo=?)";
+		ArrayList list = baseDAO.searchOBJ(sql,params, Dish.class);
+		return list;	
+    }
 }

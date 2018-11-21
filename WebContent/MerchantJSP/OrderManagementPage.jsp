@@ -17,8 +17,9 @@
 		
 		//获得需要添加的html代码
 		function getListText(item) {
+			var href="../OrderServlet?action=statement&ordernumber=";
 			var text = "<tr>" +
-				"<td scope='row'>" + item.ORDERNO + "</td>" +
+				"<td scope='row'><a href="+href + item.ORDERNO + ">"+item.ORDERNO +"</a></td>" +
 				"<td>" + item.USERNO + "</td>" +
 				"<td>" + item.PRICE + "</td>" +
 				"<td>" + item.TIME + "</td>" +
@@ -64,14 +65,13 @@
 </head>
 
 <body>
-
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="homepage.html">订单信息<span class="sr-only">(current)</span></a>
+				<li class="nav-item"><a class="nav-link" href="#">订单信息</a>
 				</li>
-				<li class="nav-item"><a class="navbar-brand" href="#">菜品信息</a>
+				<li class="nav-item"><a class="nav-link" href="#">菜品信息</a>
 				</li>
 			</ul>
 			<form class="form-inline my-2 my-lg-0">
@@ -80,8 +80,9 @@
 			</form>
 		</div>
 	</nav>
+
 <div class="alert alert-info" role="alert">
-	<table class="table">
+	<table class="table table-bordered">
 		<thead>
 			<tr>
 				<th scope="col">订单号</th>
