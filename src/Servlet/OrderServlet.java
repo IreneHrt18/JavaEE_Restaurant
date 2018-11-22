@@ -33,30 +33,29 @@ public class OrderServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-    //Ö÷¼ü²éÑ¯¡£
-	private String searchByDishNo(String OrderNo) {
-		//Í¨¹ı½Ó¿Ú»ñµÃ²éÑ¯ºóµÄdishlist
+    //æŸ¥è¯¢è®¢å•ä¿¡æ¯
+	private String searchByOrderNo(String OrderNo) {
+		//Í¨åˆå§‹åŒ–åˆ—è¡¨
 		ArrayList<Order> list = new ArrayList<>();
 		SearchDAO searchDAO = new OrderIMPL();
 		String[] params = {OrderNo};
 		list = (ArrayList<Order>)searchDAO.searchByPrimaryKey(params);
-		//½«dishlist×ª»»³ÉjsonÊı×é
+		//åˆå§‹åŒ–JSONæ•°ç»„
 		JSONArray jsonArray = new JSONArray();
 		for(int i =0;i<list.size();i++) {
 			jsonArray.add(JSONObject.fromObject(list.get(i)));
 		}
 		return jsonArray.toString();
 	}
-	//Ìø×ªµ½¶©µ¥ÏêÇé½çÃæ
-	private Order searchOrder(String OrderNo){
+	//é€šè¿‡ä¸»é”®æŸ¥è¯¢è®¢å•
+	private ArrayList<Order> searchCurrentOrder(String OrderNo){
 		ArrayList<Order> list = new ArrayList<>();
 		SearchDAO searchDAO = new OrderIMPL();
 		String[] params = {OrderNo};
 		list = (ArrayList<Order>)searchDAO.searchByPrimaryKey(params);
-		Order order=list.get(0);
-		return order;
+		return list;
 	}
-	//ÏÔÊ¾¶©µ¥ËùÓĞ²ËÆ·
+	//æŸ¥è¯¢å½“å‰è®¢å•å†…çš„èœå“ä¿¡æ¯ã€‚
 	private ArrayList<Dish> searchDishOfOrder(String OrderNo){
 		ArrayList<Dish> list = new ArrayList<>();
 		OrderIMPL orderDAO=new OrderIMPL();
@@ -64,12 +63,12 @@ public class OrderServlet extends HttpServlet {
 		list=orderDAO.searchDishOfOrder(params);
 		return list; 
 	}
-	//²éÑ¯ËùÓĞ¶©µ¥
+	//æŸ¥è¯¢æ‰€æœ‰è®¢å•ä¿¡æ¯
 	private String searchAllOrders() {
 		ArrayList<Order> list = new ArrayList<>();
 		SearchDAO searchDAO = new OrderIMPL();
 		list=(ArrayList<Order>)searchDAO.searchAll();
-		//×ª»»»ªÎªJSon
+		//ç”ŸæˆJSONæ•°ç»„ã€‚
 		JSONArray jsonArray=new JSONArray();
 		for(int i =0;i<list.size();i++) {
 			jsonArray.add(JSONObject.fromObject(list.get(i)));
@@ -84,24 +83,24 @@ public class OrderServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		String ordernumber = null;
 		switch (action) {
-		//°´ÕÕÖ÷¼ü²éÑ¯¶©µ¥ĞÅÏ¢¡£
+		//æ‰€æœ‰è®¢å•ç•Œé¢çš„æŸ¥è¯¢
 		case "search":
 			String OrderNo = request.getParameter("searchText");
-			response.getWriter().println(searchByDishNo(OrderNo));			
+			response.getWriter().println(searchByOrderNo(OrderNo));			
 			break;
-		//³õÊ¼»¯¼ÓÔØËùÓĞ¶©µ¥ĞÅÏ¢¡£
+		//æ‰€æœ‰è®¢å•ç•Œé¢çš„åŠ è½½
 		case "load":
 			response.getWriter().println(searchAllOrders());
 			break;
 		case "statement":
-			//»ñÈ¡²éÑ¯¶©µ¥ºÅ
+			//è·å–è®¢å•å·
 			ordernumber=request.getParameter("ordernumber");
-			Order order=searchOrder(ordernumber);
-            request.setAttribute("order", order);
-            //»ñÈ¡¶©µ¥ÏêÇé
+			ArrayList<Order> orderList=searchCurrentOrder(ordernumber);
+            request.setAttribute("orderList", orderList);
+            //æŸ¥è¯¢è®¢å•ä¸­çš„èœå“
             ArrayList<Dish> list=searchDishOfOrder(ordernumber);
             request.setAttribute("dishlist", list);
-            //Ìø×ªµ½¶©µ¥ÏêÇé½çÃæ¡£
+            //è·³è½¬è®¢å•è¯¦æƒ…ä¸š
         	RequestDispatcher rDispatcher=request.getRequestDispatcher("./MerchantJSP/OrderStatement.jsp");
         	rDispatcher.forward(request, response);	
 			break;

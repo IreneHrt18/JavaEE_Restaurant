@@ -47,13 +47,17 @@
 		</thead>
 		
 		<tbody id="dishlist">
-		<%Order order=(Order)request.getAttribute("order"); %>
+		<%ArrayList<Order> orderList=(ArrayList)request.getAttribute("orderList");
+		Iterator<Order> j=orderList.iterator();
+		while(j.hasNext()) {
+		Order order=j.next();%>
          <td scope='row' style="text-align:center"><%=order.getORDERNO()%></td>
          <td style="text-align:center"><%= order.getUSERNO()%></td>
          <td style="text-align:center"><%= order.getPRICE()%></td>
          <td style="text-align:center"><%= order.getTIME()%></td>
          <td style="text-align:center"><%= order.getORDERSTATE() %></td>
          <td style="text-align:center"><%= order.getCOMMENTSTATE()%></td>
+         <%}%>
 		</tbody>
 	</table>
 	</div>
