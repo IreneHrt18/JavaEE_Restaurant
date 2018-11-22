@@ -159,7 +159,7 @@ function setDishList(url, errorMessage, notFindMessage) {
 		datatype: "json",
 		success: function (data) {
 			data = $.parseJSON(data);
-			if (data != null) {
+			if (data != "") {
 				$.each(data, function (index, item) {
 					listText += getListText(item);
 				});
