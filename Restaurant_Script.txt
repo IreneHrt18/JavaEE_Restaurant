@@ -1,0 +1,120 @@
+按顺序插入表和触发器就可以
+create table users(
+userNo  		varchar(20),
+userName  	varchar(30) 	not null,
+password  	varchar(30) 	not null,
+iconURL 		varchar(90) 	not null,
+phoneNum  	varchar(20)	not null,
+cusNote 		varchar(90),
+constraint USER_PK primary key (userNo)
+);
+
+create table dish(
+dishNo  		varchar(20),
+dishName  	varchar(30) 	not null,
+price	  	integer 		not null,
+description    	varchar(90)	not null,
+img   		varchar(90)	not null,
+constraint DISH_PK primary key (dishNo)
+);
+
+create table coupon(
+couponNo  	varchar(20),
+quota	 	varchar(90) 	not null,
+limitPrice 		integer  		not null,
+period  		integer  		not null,
+constraint COUPON_PK primary key (couponNo)
+);
+
+create table user_address(
+userNo  		varchar(20),
+address	 	varchar(90) 	not null,
+constraint USER_ADDRESS_PK primary key (userNo),
+constraint USER_ADDRESS_FK foreign key (userNo) references users(userNo)
+);
+
+create table orders(
+orderNo  		varchar(20),
+userNo  		varchar(20)  	not null,
+price  		integer  		not null,
+time  		date  		not null,
+orderState 	varchar(10)	not null,
+commentState 	varchar(10)	not null,
+constraint ORDER_PK primary key (orderNo),
+constraint ORDER_FK foreign key (userNo) references users(userNo)
+);
+
+create table order_dish(
+orderNo  		varchar(20),
+dishNo  		varchar(20),
+comments  	varchar(90),
+constraint ORDER_DISH_PK primary key (orderNo,dishNo),
+constraint ORDER_DISH_FK1 foreign key (orderNo) references orders(orderNo),
+constraint ORDER_DISH_FK2 foreign key (dishNo) references dish(dishNo)
+);
+
+
+create table user_coupon(
+userNo  		varchar(20),
+couponNo 	varchar(20),
+couponState 	varchar(10)  	not null,
+constraint USER_COUPON_PK primary key (userNo,couponNo),
+constraint USER_COUPON_FK1 foreign key (userNo) references users(userNo),
+constraint USER_COUPON_FK2 foreign key (couponNo) references coupon(couponNo)
+);
+
+
+create table user_cart(
+userNo 		varchar(20),
+dishNo 		varchar(20),
+constraint USER_CART_PK primary key (userNo,dishNo),
+constraint USER_CART_FK1 foreign key (userNo) references users(userNo),
+constraint USER_CART_FK2 foreign key (dishNo) references dish(dishNo)
+);
+
+ /**级联更新**/
+create or replace trigger tri_update_dish
+after update of dishNo on dish
+for each row
+begin
+     update order_dish set dishNo=:new.dishNo where dishNo=:old.dishNo;
+    update user_cart set dishNo=:new.dishNo where dishNo=:old.dishNo;
+end;
+/
+
+create or replace trigger tri_update_users
+after update of userNo on users
+for each row
+begin
+     update user_address set userNo=:new.userNo where userNo=:old.userNo;
+     update orders set userNo=:new.userNo where userNo=:old.userNo;
+     update user_coupon set userNo=:new.userNo where userNo=:old.userNo;
+     update user_cart set userNo=:new.userNo where userNo=:old.userNo;
+end;
+/
+
+create or replace trigger tri_update_coupon
+after update of couponNo on coupon
+for each row
+begin
+     update user_coupon set couponNo=:new.couponNo where couponNo=:old.couponNo;
+end;
+/
+
+create or replace trigger tri_update_orders
+after update of orderNo on orders
+for each row
+begin
+     update order_dish set orderNo=:new.orderNo where orderNo=:old.orderNo;
+end;
+/
+
+//删除表。
+drop table user_cart;
+drop table user_coupon;
+drop table order_dish;
+drop table orders;
+drop table user_address;
+drop table coupon;
+drop table dish;
+drop table users;
