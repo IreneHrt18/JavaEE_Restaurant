@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package JDBC;
 
 import java.util.ArrayList;
@@ -26,3 +27,17 @@ public class test {
 	}
 
 }
+=======
+package JDBC;
+
+
+
+public class test {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+	
+	}
+
+}
+>>>>>>> f058741ba252d2e80f6959c899416770d2745f4d
