@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public abstract class BaseDAO {
 	/**
-	 * ²»´ø²ÎÊıµÄ²éÑ¯
+	 * ä¸å¸¦å‚æ•°çš„æŸ¥è¯¢
 	 * @param sql
 	 * @param clazz
 	 * @return
@@ -14,7 +14,7 @@ public abstract class BaseDAO {
 	public abstract ArrayList searchOBJ(String sql,Class clazz);
 	@SuppressWarnings("rawtypes")
 	/**
-	 * ´ø²ÎÊıµÄ²éÑ¯
+	 * å¸¦å‚æ•°çš„æŸ¥è¯¢
 	 * @param sql
 	 * @param params
 	 * @param clazz
@@ -22,35 +22,35 @@ public abstract class BaseDAO {
 	 */
 	public abstract ArrayList searchOBJ(String sql , Object[] params, Class clazz);
 	/**
-	 * ²¿Êğ²éÑ¯Óï¾ä
+	 * éƒ¨ç½²æŸ¥è¯¢è¯­å¥
 	 * @param rSet
 	 * @param clazz
 	 * @return
 	 */
 	public abstract Object mapping(ResultSet rSet,Class<Object> clazz);
 	/**
-	 * Ö´ĞĞÒ»¸öÓï¾ä¶àÖÖ²ÎÊı
+	 * æ‰§è¡Œä¸€ä¸ªè¯­å¥å¤šç§å‚æ•°
 	 * @param sql
 	 * @param params
-	 * @return·µ»Ø³É¹¦ĞŞ¸ÄµÄĞĞÊı
+	 * @returnè¿”å›æˆåŠŸä¿®æ”¹çš„è¡Œæ•°
 	 */
 	public abstract int singleSQL(String sql,Object[] params);
 	/**
-	 * Ö»ÓĞÒ»ÖÖ²ÎÊıÖ´ĞĞ¶à´Î
+	 * åªæœ‰ä¸€ç§å‚æ•°æ‰§è¡Œå¤šæ¬¡
 	 * @param sql
 	 * @param params
-	 * @return³É¹¦ĞŞ¸ÄµÄĞĞÊıÊı×é
+	 * @returnæˆåŠŸä¿®æ”¹çš„è¡Œæ•°æ•°ç»„
 	 */
 	public abstract int[] multipleSQL(String sql,Object[] params);
 	/**
-	 * ¶àÖÖ²ÎÊıÖ´ĞĞ¶à´Î
-	 * arralistÖĞ´æ´¢ÁË¶àÖÖ²ÎÊıµÄÊı×é
+	 * å¤šç§å‚æ•°æ‰§è¡Œå¤šæ¬¡
+	 * arralistä¸­å­˜å‚¨äº†å¤šç§å‚æ•°çš„æ•°ç»„
 	 * @param sql
 	 * @param params
 	 */
 	public abstract int[] multipleParam(String sql,ArrayList<Object[]> params);
 	/**
-	 * »ñÈ¡Ö´ĞĞÓï¾äºóµÄ½á¹ûÊıÁ¿
+	 * è·å–æ‰§è¡Œè¯­å¥åçš„ç»“æœæ•°é‡
 	 * @param sql
 	 * @param params
 	 * @return
@@ -59,7 +59,7 @@ public abstract class BaseDAO {
 	
 	
 	/**
-	 * Ä£ºı²éÑ¯
+	 * æ¨¡ç³ŠæŸ¥è¯¢
 	 * @param sql
 	 * @param param
 	 * @param clazz

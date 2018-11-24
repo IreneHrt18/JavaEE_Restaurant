@@ -15,7 +15,7 @@ public class Helper {
 	private static String username;
 	private static String password;
 	/**
-	 * 
+	 *
 	 */
 	static{
 		Properties properties = new Properties();
@@ -32,7 +32,7 @@ public class Helper {
 		}
 	}
 	/**
-	 * 
+	 *
 	 * @return connection
 	 */
 	public static Connection getConnection() {
@@ -51,14 +51,14 @@ public class Helper {
 		return null;
 	}
 	/**
-	 * 
+	 *
 	 * @param rs
 	 * @param ps
 	 * @param conn
 	 */
 	public static void free(ResultSet rs, PreparedStatement ps, Connection conn) {
 		try {
-			// 释放ResultSet对象
+			// 閲婃斁ResultSet瀵硅薄
 			if (null != rs) {
 				rs.close();
 			}
@@ -66,7 +66,7 @@ public class Helper {
 			e.printStackTrace();
 		} finally {
 			try {
-				// 释放Statement对象
+				// 閲婃斁Statement瀵硅薄
 				if (null != ps) {
 					ps.close();
 				}
@@ -74,7 +74,7 @@ public class Helper {
 				e.printStackTrace();
 			} finally {
 				try {
-					// 释放Connection对象
+					// 閲婃斁Connection瀵硅薄
 					if (null != conn) {
 						conn.close();
 					}

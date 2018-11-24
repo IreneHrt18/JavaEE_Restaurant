@@ -12,12 +12,12 @@ public class test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		// 通过接口获得查询后的dishlist
+		// 閫氳繃鎺ュ彛鑾峰緱鏌ヨ鍚庣殑dishlist
 		ArrayList<Dish> list = new ArrayList<>();
 		SearchDAO searchDAO = new DishIMPL();
 		String[] params = { "2" };
 		list = (ArrayList<Dish>) searchDAO.searchByPrimaryKey(params);
-		// 将dishlist转换成json数组
+		// 灏哾ishlist杞崲鎴恓son鏁扮粍
 		JSONArray jsonArray = new JSONArray();
 		for (int i = 0; i < list.size(); i++) {
 			jsonArray.add(JSONObject.fromObject(list.get(i)));
