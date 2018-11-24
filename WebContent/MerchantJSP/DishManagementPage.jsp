@@ -31,12 +31,22 @@
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="homepage.html">订单信息<span class="sr-only">(current)</span></a>
+				<li class="nav-item "><a class="nav-link" href="#">订单信息</a>
 				</li>
-				<li class="nav-item"><a class="navbar-brand" href="#">菜品信息</a>
+				<li class="nav-item"><a class="nav-link" href="#">菜品信息</a>
 				</li>
 			</ul>
 			<form class="form-inline my-2 my-lg-0">
+			<ul class="navbar-nav mr-auto">
+							     <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       	 热搜
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">排行</a>
+                      </div>
+                    </li>
+                    </ul>
 				<input class="form-control mr-sm-2" type="search" placeholder="菜品编号" aria-label="Search">
 				<input type="button" class="btn btn-outline-success my-2 my-sm-0" id="searchButton" value="搜索">
 			</form>
@@ -45,7 +55,7 @@
 
 	<table class="table">
 		<thead>
-			<tr>
+			<tr style="text-align:center">
 				<th scope="col">菜品编号</th>
 				<th scope="col">菜品名称</th>
 				<th scope="col">菜品价格</th>
@@ -58,16 +68,24 @@
 		</tbody>
 	</table>
 	<div class="xx">
-		<button class="prevPage">上一页</button>
+	<nav aria-label="Page navigation example">	
+	 <ul class="pagination justify-content-end">
+	
+		<li class="page-item"><button class="prevPage page-link">上一页</button></li>
+		
 		<%PageModel pageModel = new PageModel(3); %>
 		<%  for(int i = 0;i<pageModel.getTotalPageNum();i++){ %>
-		<button class="pageButton" value="<%=i+1 %>">
-			<%=i+1 %> </button>
+		<li class="page-item"><button class="pageButton page-link" value="<%=i+1 %>">
+		
+			<%=i+1 %> </button></li>
 		<% if(i==0||i==pageModel.getTotalPageNum()-2){ %>
-		<span>...</span>
+		<span class="page-link">...</span>
 		<% } %>
 		<% } %>
-		<button class="nextPage">下一页</button>
+		<li class="page-item"><button class="nextPage page-link">下一页</button></li>
+		    </li>
+  		</ul>
+		
 	</div>
 </body>
 

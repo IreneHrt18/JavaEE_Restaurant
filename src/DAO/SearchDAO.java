@@ -10,6 +10,10 @@ public interface SearchDAO {
 	 */
 	@SuppressWarnings("rawtypes")
 	public ArrayList searchByPrimaryKey(String[] params);
+	/**
+	 * 查询全部信息
+	 * @return
+	 */
 	public ArrayList searchAll();
 	/**
 	 * 通过页面搜索

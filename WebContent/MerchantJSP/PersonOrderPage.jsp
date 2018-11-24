@@ -1,13 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="Bean.PageModel"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 	<meta charset="UTF-8">
-	
-	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,8 +12,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 	 crossorigin="anonymous">
 	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
-	<script src="./OrderManagementPageJS.js" charset="UTF-8" type="text/javascript"></script>
-<!--	<script type="text/javascript">	
+	<script type="text/javascript">	
 		
 		//获得需要添加的html代码
 		function getListText(item) {
@@ -33,7 +29,7 @@
 		}
 		//初始化页面
 		$(document).ready(function(){
-			var url = "../OrderServlet?action=load";
+			var url = "../OrderServlet?action=loadPersonalOrder";
 			var listText = "";
 			$.getJSON(url, function (data, textstatus, jqxhr) {
 				if(data !=null){
@@ -63,7 +59,7 @@
 			})
 		})
 
-	</script>-->
+	</script>
 
 </head>
 
@@ -87,7 +83,7 @@
 <div class="alert alert-info" role="alert">
 	<table class="table table-bordered">
 		<thead>
-			<tr style="text-align:center">
+			<tr>
 				<th scope="col">订单号</th>
 				<th scope="col">用户编号</th>
 				<th scope="col">消费金额</th>
@@ -100,28 +96,7 @@
 		<tbody id="dishlist">
 
 		</tbody>
-	</table>
-	</div>
-	<div class="xx" style="margin: 0 auto;">
-	<nav aria-label="Page navigation example">	
-	 <ul class="pagination justify-content-end">
-	
-		<li class="page-item"><button class="prevPage page-link">上一页</button></li>
-		
-		<%PageModel pageModel = new PageModel(3); %>
-		<%  for(int i = 0;i<pageModel.getTotalPageNum();i++){ %>
-		<li class="page-item"><button class="pageButton page-link" value="<%=i+1 %>">
-		
-			<%=i+1 %> </button></li>
-		<% if(i==0||i==pageModel.getTotalPageNum()-2){ %>
-		<span class="page-link">...</span>
-		<% } %>
-		<% } %>
-		<li class="page-item"><button class="nextPage page-link">下一页</button></li>
-		    </li>
-  		</ul>
-		
-	</div>
+	</table></div>
 </body>
 
 </html>

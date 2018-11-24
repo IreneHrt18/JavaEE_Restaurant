@@ -13,9 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import Bean.Dish;
 import Bean.Order;
+import Bean.PageModel;
 import DAO.SearchDAO;
+import DAO.SortDAO;
 import DAOIMPL.DishIMPL;
 import DAOIMPL.OrderIMPL;
+import JDBC.DAOFactory;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -86,7 +89,16 @@ public class OrderServlet extends HttpServlet {
 		//所有订单界面的查询
 		case "search":
 			String OrderNo = request.getParameter("searchText");
+			response.setCharacterEncoding("utf-8");
 			response.getWriter().println(searchByOrderNo(OrderNo));			
+			break;
+		case "getPageModel":
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().println(getPageModel(request,response));
+			break;
+		case "searchByPage":
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().println(searchByPage(request, response,false));
 			break;
 		//所有订单界面的加载
 		case "load":
@@ -98,13 +110,12 @@ public class OrderServlet extends HttpServlet {
 			ArrayList<Order> orderList=searchCurrentOrder(ordernumber);
             request.setAttribute("orderList", orderList);
             //查询订单中的菜品
-            ArrayList<Dish> list=searchDishOfOrder(ordernumber);
-            request.setAttribute("dishlist", list);
+            ArrayList<Dish> dishList=searchDishOfOrder(ordernumber);
+            request.setAttribute("dishlist", dishList);
             //跳转订单详情业
         	RequestDispatcher rDispatcher=request.getRequestDispatcher("./MerchantJSP/OrderStatement.jsp");
         	rDispatcher.forward(request, response);	
-			break;
-
+			break;		
 		default:
 			break;
 		}
@@ -117,5 +128,42 @@ public class OrderServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
+	/**
+	 * 通过页面查询
+	 * @param request
+	 * @param response
+	 * @return string
+	 */
+	@SuppressWarnings("unchecked")
+	public String searchByPage(HttpServletRequest request,HttpServletResponse response,boolean isSort) {
+		SearchDAO searchDAO = (SearchDAO)DAOFactory.newInstance("Order");
+		//查询页面第一页的所有菜品信息
+		int currenPage = Integer.parseInt(request.getParameter("currentPage"));
+		ArrayList<Order> list = (ArrayList<Order>)searchDAO.searchByPage(currenPage, PageModel.getPageSize());
+		if(isSort) {
+			SortDAO sortDAO = (SortDAO)DAOFactory.newInstance("Order");
+			Order[] dishs = (Order[])list.toArray();
+			list.clear();
+			list.addAll(sortDAO.descSort(dishs));
+		}
+		JSONArray jsonArray = new JSONArray();
+		for(int i =0;i<list.size();i++) {
+			jsonArray.add(JSONObject.fromObject(list.get(i)));
+		}
+		return jsonArray.toString();
+	}
+	/**
+	 * 获得pagemodel
+	 * @param currentPage
+	 * @param pageSize
+	 * @return 一组json对象的字符串
+	 */
+	private String getPageModel(HttpServletRequest request,HttpServletResponse response) {
+		SearchDAO searchDAO = (SearchDAO)DAOFactory.newInstance("Order");
+		//分页信息
+		PageModel pageModel = new PageModel(searchDAO.getCount());
+		JSONObject jsonObject = JSONObject.fromObject(pageModel);
+		request.setAttribute("DishPageModel", pageModel);
+		return jsonObject.toString();
+	}
 }

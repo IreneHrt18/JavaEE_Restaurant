@@ -130,7 +130,7 @@ public class DishIMPL implements SearchDAO,SortDAO {
 	public ArrayList fuzzyQuery(String colunm, String value) {
 		// TODO Auto-generated method stub
 		BaseDAO baseDAO = (BaseDAO)DAOFactory.newInstance("BaseDAO");
-		String sql = "select * from dish where "+colunm+" = ?";
+		String sql = "select * from dish where "+colunm+" like ?";
 		return baseDAO.fuzzyQuery(sql, value, Dish.class);
 	}
 
