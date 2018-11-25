@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+html {
+	font-size: 16px;
+}
+
+body {
+	background-color: #282828;
+}
+
+/*图片上传盒子*/
+.upload-box {
+	position: relative;
+	width: 100%;
+	height: 350px;
+	margin-left: auto;
+	margin-top: 20px;
+	padding: 20px;
+}
+
+.upload-box .add {
+	position: relative;
+	width: 190px;
+	height: 180px;
+	margin: 0 auto;
+	cursor: pointer;
+	border: 1px solid #969696;
+}
+
+.upload-box .add img {
+	position: absolute;
+	width: 190px;
+	height: 180px;
+}
+
+.upload-box .add input[type=file] {
+	position: absolute;
+	width: 190px;
+	height: 180px;
+	cursor: pointer;
+	opacity: 0;
+}
+
+.upload-box .add input[type=submit]{
+	position:absolute;
+	margin-left:160px;
+}
+
+.upload-box .upload-user {
+	position: relative;
+	margin-bottom: 20px;
+	margin: 0 auto;
+	width: 50%;
+	height: auto;
+	text-align: center;
+	font-weight: bold;
+}
+
+.order-box{
+	position:relative;
+	margin-left:110px;
+	margin-top:20px;
+	padding-left:37px;
+	padding-top:45px;
+	width:200px;
+	height:120px;
+	border-radius:10px;
+	background:#c0c0c0;
+	opacity:0.7;
+}
+
+.personalInfo{
+	position:relative;
+	margin-left:410px;
+	margin-top:-120px;
+	padding-left:10px;
+	padding-top:10px;
+	width:500px;
+	height:120px;
+	border-radius:10px;
+	background:#c0c0c0;
+	opacity:0.7;
+	color:#000000;
+}
+
+.AllOrder{
+	position:relative;
+	margin-left:110px;
+	margin-top:20px;
+	padding-left:10px;
+	padding-top:10px;
+	width:800px;
+	height:auto;
+	border-radius:10px;
+	background:#c0c0c0;
+	opacity:0.7;
+}

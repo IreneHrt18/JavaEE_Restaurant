@@ -4,13 +4,15 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import Bean.Dish;
+import DAO.ModifyDAO;
 import DAO.SearchDAO;
 import DAO.SortDAO;
 import JDBC.BaseDAO;
 import JDBC.DAOFactory;
 
-public class DishIMPL implements SearchDAO,SortDAO {
+public class DishIMPL implements SearchDAO,SortDAO,ModifyDAO {
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public ArrayList searchAll() {
 		// TODO Auto-generated method stub
@@ -138,6 +140,14 @@ public class DishIMPL implements SearchDAO,SortDAO {
 	public int[] getMuiltCountByParams(String colunm, String[] value) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int modifyImgUrl(String[] params) {
+		// TODO Auto-generated method stub
+		BaseDAO baseDAO = (BaseDAO)DAOFactory.newInstance("BaseDAO");
+		String sql = "update dish set img = ? where dishno = ?";
+		return baseDAO.singleSQL(sql, params);
 	}
 
 }

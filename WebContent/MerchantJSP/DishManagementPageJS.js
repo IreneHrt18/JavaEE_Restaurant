@@ -110,6 +110,7 @@ function initPage() {
  */
 function getlist(num) {
 	var errorMessage = "糟糕，服务器遇到了错误请重新加载。";
+	var searchMessage = "抱歉，我们并没有找到你所需要的商品。"
 	if (isSearch != true) {
 		if (isSort != true) {
 			var url = "../DishServlet?action=searchByPage&currentPage=" + num;
@@ -121,12 +122,12 @@ function getlist(num) {
 	} else {
 		if (isSort == true) {
 			var url = "../DishServlet?action=searchAndSort&searchText=" + searchText;
-			setDishList(url, errorMessage, errorMessage);
+			setDishList(url, errorMessage, searchMessage);
 		} else {
 			setCurrentPage(1);
 			setTotalPage(1);
 			var url = "../DishServlet?action=search&searchText=" + searchText;
-			setDishList(url, errorMessage, errorMessage);
+			setDishList(url, errorMessage, searchMessage);
 		}
 	}
 	hideButton(num);
@@ -138,8 +139,8 @@ function getlist(num) {
  */
 function getListText(item) {
 	var text = "<tr>" +
-		"<td scope='row'>" + item.DISHNO + "</td>" +
-		"<td>" + item.DISHNAME + "</td>" +
+		"<td scope='row'><a href='../DishServlet?action=jumpToDetail&dishNo="+item.DISHNO+"'>" + item.DISHNO + "</a></td>" +
+		"<td> <a href='../DishServlet?action=jumpToDetail&dishNo="+item.DISHNO+"'>" + item.DISHNAME + "</a></td>" +
 		"<td>" + item.PRICE + "</td>" +
 		"<td>" + item.DESCRIPTION + "</td>" +
 		"<td><img src=" + item.IMG + " width='50px' height='50px'></td>" +
