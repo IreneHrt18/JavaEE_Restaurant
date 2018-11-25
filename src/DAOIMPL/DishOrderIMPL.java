@@ -65,4 +65,22 @@ public class DishOrderIMPL implements SearchDAO {
 		return null;
 	}
 
+	@Override
+	public ArrayList searchByParams(String[] params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList searchByPage(int currentPage, int pageSize, String viewName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getCount(String viewName) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

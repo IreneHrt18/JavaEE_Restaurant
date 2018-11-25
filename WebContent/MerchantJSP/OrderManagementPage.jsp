@@ -16,55 +16,6 @@
 	 crossorigin="anonymous">
 	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
 	<script src="./OrderManagementPageJS.js" charset="UTF-8" type="text/javascript"></script>
-<!--	<script type="text/javascript">	
-		
-		//获得需要添加的html代码
-		function getListText(item) {
-			var href="../OrderServlet?action=statement&ordernumber=";
-			var text = "<tr>" +
-				"<td scope='row'><a href="+href + item.ORDERNO + ">"+item.ORDERNO +"</a></td>" +
-				"<td>" + item.USERNO + "</td>" +
-				"<td>" + item.PRICE + "</td>" +
-				"<td>" + item.TIME + "</td>" +
-				"<td>" + item.ORDERSTATE +"</td>" +				
-				"<td>" + item.COMMENTSTATE +"</td>" +		
-				"</tr>";
-			return text;
-		}
-		//初始化页面
-		$(document).ready(function(){
-			var url = "../OrderServlet?action=load";
-			var listText = "";
-			$.getJSON(url, function (data, textstatus, jqxhr) {
-				if(data !=null){
-					$.each(data, function (index, item) {
-							listText += getListText(item);
-						})
-						$("#dishlist").html(listText);
-						$("[type=search]").val("");	
-				}
-			})
-		})
-		
-		//绑定事件
-		$(function () {
-			$(document).on("click", "[type=button]", function () {
-				var url = "../OrderServlet?action=search&searchText=" + $("[type=search]").val();
-				var listText = "";
-				$.getJSON(url, function (data, textstatus, jqxhr) {
-					if (data != null) {
-						$.each(data, function (index, item) {
-							listText += getListText(item);
-						})
-						$("#dishlist").html(listText);
-						$("[type=search]").val("");
-					}
-				})
-			})
-		})
-
-	</script>-->
-
 </head>
 
 <body>
@@ -90,6 +41,7 @@
 			<tr style="text-align:center">
 				<th scope="col">订单号</th>
 				<th scope="col">用户编号</th>
+				<th scope="col">用户姓名</th>
 				<th scope="col">消费金额</th>
 				<th scope="col">订单时间</th>
 				<th scope="col">订单状态</th>

@@ -18,6 +18,7 @@ import DAO.SearchDAO;
 import DAO.SortDAO;
 import DAOIMPL.DishIMPL;
 import DAOIMPL.OrderIMPL;
+import JDBC.BaseDAO;
 import JDBC.DAOFactory;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -37,10 +38,11 @@ public class OrderServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
     //查询订单信息
+	@SuppressWarnings("unchecked")
 	private String searchByOrderNo(String OrderNo) {
 		//ͨ初始化列表
 		ArrayList<Order> list = new ArrayList<>();
-		SearchDAO searchDAO = new OrderIMPL();
+		SearchDAO searchDAO =(SearchDAO)DAOFactory.newInstance("Order");
 		String[] params = {OrderNo};
 		list = (ArrayList<Order>)searchDAO.searchByPrimaryKey(params);
 		//初始化JSON数组
@@ -51,14 +53,19 @@ public class OrderServlet extends HttpServlet {
 		return jsonArray.toString();
 	}
 	//通过主键查询订单
+	@SuppressWarnings("unchecked")
 	private ArrayList<Order> searchCurrentOrder(String OrderNo){
 		ArrayList<Order> list = new ArrayList<>();
-		SearchDAO searchDAO = new OrderIMPL();
+		SearchDAO searchDAO = (SearchDAO)DAOFactory.newInstance("Order");
 		String[] params = {OrderNo};
 		list = (ArrayList<Order>)searchDAO.searchByPrimaryKey(params);
 		return list;
 	}
-	//查询当前订单内的菜品信息。
+	/**
+	 * 查询当前订单内的菜品信息。
+	 * @param OrderNo
+	 * @return
+	 */
 	private ArrayList<Dish> searchDishOfOrder(String OrderNo){
 		ArrayList<Dish> list = new ArrayList<>();
 		OrderIMPL orderDAO=new OrderIMPL();
@@ -67,9 +74,10 @@ public class OrderServlet extends HttpServlet {
 		return list; 
 	}
 	//查询所有订单信息
+	@SuppressWarnings("unchecked")
 	private String searchAllOrders() {
 		ArrayList<Order> list = new ArrayList<>();
-		SearchDAO searchDAO = new OrderIMPL();
+		SearchDAO searchDAO =(SearchDAO)DAOFactory.newInstance("Order");
 		list=(ArrayList<Order>)searchDAO.searchAll();
 		//生成JSON数组。
 		JSONArray jsonArray=new JSONArray();
@@ -84,6 +92,7 @@ public class OrderServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String action = request.getParameter("action");
+		//获得要查询的订单号。
 		String ordernumber = null;
 		switch (action) {
 		//所有订单界面的查询
@@ -157,8 +166,7 @@ public class OrderServlet extends HttpServlet {
 	 * @param currentPage
 	 * @param pageSize
 	 * @return 一组json对象的字符串
-	 */
-	private String getPageModel(HttpServletRequest request,HttpServletResponse response) {
+	 */	private String getPageModel(HttpServletRequest request,HttpServletResponse response) {
 		SearchDAO searchDAO = (SearchDAO)DAOFactory.newInstance("Order");
 		//分页信息
 		PageModel pageModel = new PageModel(searchDAO.getCount());
@@ -166,4 +174,5 @@ public class OrderServlet extends HttpServlet {
 		request.setAttribute("DishPageModel", pageModel);
 		return jsonObject.toString();
 	}
+
 }

@@ -142,6 +142,7 @@ function getListText(item) {
 	var text = "<tr style="+style+">" +
 		"<td scope='row'><a href="+href + item.ORDERNO + ">"+item.ORDERNO +"</a></td>" +
 		"<td>" + item.USERNO + "</td>" +
+		"<td>" + item.USERNAME + "</td>" +
 		"<td>" + item.PRICE + "</td>" +
 		"<td>" + item.TIME + "</td>" +
 		"<td>" + item.ORDERSTATE +"</td>" +				

@@ -40,6 +40,7 @@
 			<tr>
 				<th scope="col" style="text-align:center">订单号</th>
 				<th scope="col" style="text-align:center">用户编号</th>
+				<th scope="col" style="text-align:center">用户姓名</th>
 				<th scope="col" style="text-align:center">消费金额</th>
 				<th scope="col" style="text-align:center">订单时间</th>
 				<th scope="col" style="text-align:center">订单状态</th>
@@ -54,6 +55,7 @@
 		Order order=j.next();%>
          <td scope='row' style="text-align:center"><%=order.getORDERNO()%></td>
          <td style="text-align:center"><%= order.getUSERNO()%></td>
+         <td style="text-align:center"><%= order.getUSERNAME()%></td>
          <td style="text-align:center"><%= order.getPRICE()%></td>
          <td style="text-align:center"><%= order.getTIME()%></td>
          <td style="text-align:center"><%= order.getORDERSTATE() %></td>

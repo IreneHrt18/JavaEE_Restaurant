@@ -45,13 +45,21 @@ public class Order {
 	public void setCOMMENTSTATE(String cOMMENTSTATE) {
 		COMMENTSTATE = cOMMENTSTATE;
 	}
-	
+
+	public String getUSERNAME() {
+		return USERNAME;
+	}
+	public void setUSERNAME(String uSERNAME) {
+		USERNAME = uSERNAME;
+	}
+
 	private String ORDERNO;
 	private String USERNO;
 	private BigDecimal PRICE;
 	private Date TIME;
 	private String	ORDERSTATE;
 	private String COMMENTSTATE;
-	
+	private String USERNAME;
+
 	
 }
