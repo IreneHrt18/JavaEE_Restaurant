@@ -75,15 +75,27 @@ $(document).ready(
 		}
 		hideButton(currentPage);
 	}),
-	// $(document).on("click", "", function sort() {
-	// 	setIsSort(true);
-	// 	if (isSearch == true) {
-
-	// 	} else {
-	// 		getlist(currentPage);
-	// 	}
-
-	// }),
+	$(document).on("click","#all",function selectAll(){
+		if($("#all").attr("checked")){
+			$(".checkbox").attr("checked",true);
+		}else{
+			$(".checkbox").attr("checked", false);
+		}
+	}),
+//	$(document).on("click","#delete",function deleteDish(){
+//		
+//	}),
+	$(document).on("click", ".dropdown-item", function sort() {
+		if(isSort){
+			setIsSort(false);
+			$(this).html("排名");
+		}
+		else {
+			setIsSort(true);
+			$(this).html("顺序");
+		}
+		getlist(currentPage);
+	}),
 	initPage()
 );
 /**
@@ -110,6 +122,7 @@ function initPage() {
  */
 function getlist(num) {
 	var errorMessage = "糟糕，服务器遇到了错误请重新加载。";
+	var searchMessage = "抱歉，我们并没有找到你所需要的商品。"
 	if (isSearch != true) {
 		if (isSort != true) {
 			var url = "../DishServlet?action=searchByPage&currentPage=" + num;
@@ -121,12 +134,12 @@ function getlist(num) {
 	} else {
 		if (isSort == true) {
 			var url = "../DishServlet?action=searchAndSort&searchText=" + searchText;
-			setDishList(url, errorMessage, errorMessage);
+			setDishList(url, errorMessage, searchMessage);
 		} else {
 			setCurrentPage(1);
 			setTotalPage(1);
 			var url = "../DishServlet?action=search&searchText=" + searchText;
-			setDishList(url, errorMessage, errorMessage);
+			setDishList(url, errorMessage, searchMessage);
 		}
 	}
 	hideButton(num);
@@ -137,10 +150,10 @@ function getlist(num) {
  * @returns string
  */
 function getListText(item) {
-	var style="text-align:center";
-	var text = "<tr style="+style+">" +
-		"<td scope='row'>" + item.DISHNO + "</td>" +
-		"<td>" + item.DISHNAME + "</td>" +
+	var text = "<tr style ='text-align:center'>" +
+		"<td scope='row'><input type='checkbox' class='checkbox' value="+ item.DISHNO +"></td>"+
+		"<td><a href='../DishServlet?action=jumpToDetail&dishNo="+item.DISHNO+"'>" + item.DISHNO + "</a></td>" +
+		"<td> <a href='../DishServlet?action=jumpToDetail&dishNo="+item.DISHNO+"'>" + item.DISHNAME + "</a></td>" +
 		"<td>" + item.PRICE + "</td>" +
 		"<td>" + item.DESCRIPTION + "</td>" +
 		"<td><img src=" + item.IMG + " width='50px' height='50px'></td>" +
@@ -160,7 +173,7 @@ function setDishList(url, errorMessage, notFindMessage) {
 		datatype: "json",
 		success: function (data) {
 			data = $.parseJSON(data);
-			if (data != null) {
+			if (data != "") {
 				$.each(data, function (index, item) {
 					listText += getListText(item);
 				});

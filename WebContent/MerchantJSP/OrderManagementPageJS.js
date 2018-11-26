@@ -144,7 +144,7 @@ function getListText(item) {
 		"<td>" + item.USERNO + "</td>" +
 		"<td>" + item.USERNAME + "</td>" +
 		"<td>" + item.PRICE + "</td>" +
-		"<td>" + item.TIME + "</td>" +
+		"<td>" + item.TIMESTRING + "</td>" +
 		"<td>" + item.ORDERSTATE +"</td>" +				
 		"<td>" + item.COMMENTSTATE +"</td>" +		
 		"</tr>";

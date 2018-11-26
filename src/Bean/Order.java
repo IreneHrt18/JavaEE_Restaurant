@@ -1,9 +1,13 @@
 package Bean;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.naming.java.javaURLContextFactory;
+
+import oracle.sql.TIMESTAMP;
+import sun.awt.util.ThreadGroupUtils;
 public class Order {
 	
 	public String getORDERNO() {
@@ -24,14 +28,20 @@ public class Order {
 	public void setPRICE(BigDecimal pRICE) {
 		PRICE = pRICE;
 	}
-	public String getTIME() {
-		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String dateString=formatter.format(TIME);
-		return dateString;
-		
-	}
+//	public String getTIME() {
+//		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+//		String dateString=formatter.format(TIME);
+//		return dateString;
+//		
+//	}
+	public Timestamp getTIME() {
+	return (Timestamp)TIME;	
+}
 	public void setTIME(Date tIME) {
 		TIME = tIME;
+		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+		String dateString=formatter.format(TIME);
+		this.TIMESTRING=dateString;
 	}
 	public String getORDERSTATE() {
 		return ORDERSTATE;
@@ -60,6 +70,10 @@ public class Order {
 	private String	ORDERSTATE;
 	private String COMMENTSTATE;
 	private String USERNAME;
+	private String TIMESTRING;
+	public String getTIMESTRING() {
+		return TIMESTRING;
+	}
 
 	
 }

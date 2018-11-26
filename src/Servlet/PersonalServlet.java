@@ -9,11 +9,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.Session;
 
+import Bean.User;
+import DAO.SearchDAO;
+import DAOIMPL.UserIMPL;
 import Bean.Dish;
 import Bean.Order;
 import Bean.PageModel;
-import DAO.SearchDAO;
 import DAO.SortDAO;
 import DAOIMPL.OrderIMPL;
 import JDBC.DAOFactory;
@@ -34,6 +37,31 @@ public class PersonalServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
+
+    @SuppressWarnings("unchecked")
+	private String searchByUserNo(String UserNo) {
+		ArrayList<User> list = new ArrayList<>();
+		SearchDAO searchDAO = new UserIMPL();
+		String[] params = {UserNo};
+		list = (ArrayList<User>)searchDAO.searchByPrimaryKey(params);
+		JSONArray jsonArray = new JSONArray();
+		for(int i =0;i<list.size();i++) {
+			jsonArray.add(JSONObject.fromObject(list.get(i)));
+		}
+		
+		return jsonArray.toString();
+	}
+    
+  //statement
+  	@SuppressWarnings("unchecked")
+	private User searchUser(String UserNo){
+  		ArrayList<User> list = new ArrayList<>();
+  		SearchDAO searchDAO = new UserIMPL();
+  		String[] params = {UserNo};
+  		list = (ArrayList<User>)searchDAO.searchByPrimaryKey(params);
+  		User user=list.get(0);
+  		return user;
+  	}
     /**
      * 查询当前订单的菜品信息。
      * @param OrderNo
@@ -51,6 +79,7 @@ public class PersonalServlet extends HttpServlet {
      * @param OrderNo
      * @return
      */
+	@SuppressWarnings("unchecked")
 	private String searchByOrderNo(String[] params) {
 		//ͨ初始化列表
 		ArrayList<Order> list = new ArrayList<>();
@@ -151,8 +180,17 @@ public class PersonalServlet extends HttpServlet {
             ArrayList<Dish> dishList=searchDishOfOrder(ordernumber);
             request.setAttribute("dishlist", dishList);
             //跳转订单详情业
-        	RequestDispatcher rDispatcher=request.getRequestDispatcher("./MerchantJSP/PersonalOrderStatementPage.jsp");
+        	RequestDispatcher rDispatcher = request.getRequestDispatcher("./MerchantJSP/PersonalOrderStatementPage.jsp");
         	rDispatcher.forward(request, response);	
+			break;
+		case "searchUser":
+			String userNo = request.getParameter("searchText");
+			response.getWriter().println(searchByUserNo(userNo));			
+			break;
+		case "Userstatement":
+			String usernumber = request.getParameter("usernumber");
+			User user=searchUser(usernumber);
+            request.setAttribute("user", user);
 			break;	
 		default:
 			break;

@@ -4,13 +4,15 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import Bean.Dish;
+import DAO.ModifyDAO;
 import DAO.SearchDAO;
 import DAO.SortDAO;
 import JDBC.BaseDAO;
 import JDBC.DAOFactory;
 
-public class DishIMPL implements SearchDAO,SortDAO {
+public class DishIMPL implements SearchDAO,SortDAO,ModifyDAO {
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public ArrayList searchAll() {
 		// TODO Auto-generated method stub
@@ -71,17 +73,17 @@ public class DishIMPL implements SearchDAO,SortDAO {
 		}
 		//获得所有含有dishno的订单数量
 		nos = searchDAO.getMuiltCountByParams("dishno", value);
-		for(int i = 0;i<nos.length;i++) {
-			System.out.println(nos[i]);
-		}
-		System.out.println("**************");
+//		for(int i = 0;i<nos.length;i++) {
+//			System.out.println(nos[i]);
+//		}
+//		System.out.println("**************");
 		//快速排序
 		quickSort(nos, 0, nos.length-1, (Dish[])array);
 		
-		for(int i = 0;i<nos.length;i++) {
-			System.out.println(nos[i]);
-		}
-		System.out.println("**************");
+//		for(int i = 0;i<nos.length;i++) {
+//			System.out.println(nos[i]);
+//		}
+//		System.out.println("**************");
 		
 		ArrayList<Dish> list = new ArrayList<>();
 		for(int i = 0;i<array.length;i++) {
@@ -141,6 +143,20 @@ public class DishIMPL implements SearchDAO,SortDAO {
 	}
 
 	@Override
+	public int modifyImgUrl(String[] params) {
+		// TODO Auto-generated method stub
+		BaseDAO baseDAO = (BaseDAO)DAOFactory.newInstance("BaseDAO");
+		String sql = "update dish set img = ? where dishno = ?";
+		return baseDAO.singleSQL(sql, params);
+	}
+
+	@Override
+	public int modifyAllByPrimarykey(String primary, String[] params) {
+		// TODO Auto-generated method stub
+		String sql = "update dish set DESCRIPTION = ? ,DISHNAME = ? ,PRICE = ? where dishno = "+primary;
+		BaseDAO baseDAO = (BaseDAO)DAOFactory.newInstance("BaseDAO");
+		return baseDAO.singleSQL(sql, params);
+	}
 	public ArrayList searchByParams(String[] params) {
 		// TODO Auto-generated method stub
 		return null;

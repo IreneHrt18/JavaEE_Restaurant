@@ -54,7 +54,7 @@
 		</tbody>
 	</table>
 	</div>
-	<div class="xx" style="margin: 0 auto;">
+	<div class="xx" style="position:relative;margin: 0 50% auto 50%;">
 	<nav aria-label="Page navigation example">	
 	 <ul class="pagination justify-content-end">
 	
