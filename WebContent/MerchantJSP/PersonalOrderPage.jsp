@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 	 crossorigin="anonymous">
 	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
-	<script src="./OrderManagementPageJS.js" charset="UTF-8" type="text/javascript"></script>
+	<script src="./PersonalOrderPageJS.js" charset="UTF-8" type="text/javascript"></script>
 </head>
 
 <body>

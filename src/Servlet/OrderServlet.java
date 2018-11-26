@@ -13,9 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import Bean.Dish;
 import Bean.Order;
+import Bean.PageModel;
 import DAO.SearchDAO;
+import DAO.SortDAO;
 import DAOIMPL.DishIMPL;
 import DAOIMPL.OrderIMPL;
+import JDBC.BaseDAO;
+import JDBC.DAOFactory;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -33,30 +37,35 @@ public class OrderServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-    //Ö÷¼ü²éÑ¯¡£
-	private String searchByDishNo(String OrderNo) {
-		//Í¨¹ı½Ó¿Ú»ñµÃ²éÑ¯ºóµÄdishlist
+    //æŸ¥è¯¢è®¢å•ä¿¡æ¯
+	@SuppressWarnings("unchecked")
+	private String searchByOrderNo(String OrderNo) {
+		//Í¨åˆå§‹åŒ–åˆ—è¡¨
 		ArrayList<Order> list = new ArrayList<>();
-		SearchDAO searchDAO = new OrderIMPL();
+		SearchDAO searchDAO =(SearchDAO)DAOFactory.newInstance("Order");
 		String[] params = {OrderNo};
 		list = (ArrayList<Order>)searchDAO.searchByPrimaryKey(params);
-		//½«dishlist×ª»»³ÉjsonÊı×é
+		//åˆå§‹åŒ–JSONæ•°ç»„
 		JSONArray jsonArray = new JSONArray();
 		for(int i =0;i<list.size();i++) {
 			jsonArray.add(JSONObject.fromObject(list.get(i)));
 		}
 		return jsonArray.toString();
 	}
-	//Ìø×ªµ½¶©µ¥ÏêÇé½çÃæ
-	private Order searchOrder(String OrderNo){
+	//é€šè¿‡ä¸»é”®æŸ¥è¯¢è®¢å•
+	@SuppressWarnings("unchecked")
+	private ArrayList<Order> searchCurrentOrder(String OrderNo){
 		ArrayList<Order> list = new ArrayList<>();
-		SearchDAO searchDAO = new OrderIMPL();
+		SearchDAO searchDAO = (SearchDAO)DAOFactory.newInstance("Order");
 		String[] params = {OrderNo};
 		list = (ArrayList<Order>)searchDAO.searchByPrimaryKey(params);
-		Order order=list.get(0);
-		return order;
+		return list;
 	}
-	//ÏÔÊ¾¶©µ¥ËùÓĞ²ËÆ·
+	/**
+	 * æŸ¥è¯¢å½“å‰è®¢å•å†…çš„èœå“ä¿¡æ¯ã€‚
+	 * @param OrderNo
+	 * @return
+	 */
 	private ArrayList<Dish> searchDishOfOrder(String OrderNo){
 		ArrayList<Dish> list = new ArrayList<>();
 		OrderIMPL orderDAO=new OrderIMPL();
@@ -64,12 +73,13 @@ public class OrderServlet extends HttpServlet {
 		list=orderDAO.searchDishOfOrder(params);
 		return list; 
 	}
-	//²éÑ¯ËùÓĞ¶©µ¥
+	//æŸ¥è¯¢æ‰€æœ‰è®¢å•ä¿¡æ¯
+	@SuppressWarnings("unchecked")
 	private String searchAllOrders() {
 		ArrayList<Order> list = new ArrayList<>();
-		SearchDAO searchDAO = new OrderIMPL();
+		SearchDAO searchDAO =(SearchDAO)DAOFactory.newInstance("Order");
 		list=(ArrayList<Order>)searchDAO.searchAll();
-		//×ª»»»ªÎªJSon
+		//ç”ŸæˆJSONæ•°ç»„ã€‚
 		JSONArray jsonArray=new JSONArray();
 		for(int i =0;i<list.size();i++) {
 			jsonArray.add(JSONObject.fromObject(list.get(i)));
@@ -82,30 +92,39 @@ public class OrderServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String action = request.getParameter("action");
+		//è·å¾—è¦æŸ¥è¯¢çš„è®¢å•å·ã€‚
 		String ordernumber = null;
 		switch (action) {
-		//°´ÕÕÖ÷¼ü²éÑ¯¶©µ¥ĞÅÏ¢¡£
+		//æ‰€æœ‰è®¢å•ç•Œé¢çš„æŸ¥è¯¢
 		case "search":
 			String OrderNo = request.getParameter("searchText");
-			response.getWriter().println(searchByDishNo(OrderNo));			
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().println(searchByOrderNo(OrderNo));			
 			break;
-		//³õÊ¼»¯¼ÓÔØËùÓĞ¶©µ¥ĞÅÏ¢¡£
+		case "getPageModel":
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().println(getPageModel(request,response));
+			break;
+		case "searchByPage":
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().println(searchByPage(request, response,false));
+			break;
+		//æ‰€æœ‰è®¢å•ç•Œé¢çš„åŠ è½½
 		case "load":
 			response.getWriter().println(searchAllOrders());
 			break;
 		case "statement":
-			//»ñÈ¡²éÑ¯¶©µ¥ºÅ
+			//è·å–è®¢å•å·
 			ordernumber=request.getParameter("ordernumber");
-			Order order=searchOrder(ordernumber);
-            request.setAttribute("order", order);
-            //»ñÈ¡¶©µ¥ÏêÇé
-            ArrayList<Dish> list=searchDishOfOrder(ordernumber);
-            request.setAttribute("dishlist", list);
-            //Ìø×ªµ½¶©µ¥ÏêÇé½çÃæ¡£
+			ArrayList<Order> orderList=searchCurrentOrder(ordernumber);
+            request.setAttribute("orderList", orderList);
+            //æŸ¥è¯¢è®¢å•ä¸­çš„èœå“
+            ArrayList<Dish> dishList=searchDishOfOrder(ordernumber);
+            request.setAttribute("dishlist", dishList);
+            //è·³è½¬è®¢å•è¯¦æƒ…ä¸š
         	RequestDispatcher rDispatcher=request.getRequestDispatcher("./MerchantJSP/OrderStatement.jsp");
         	rDispatcher.forward(request, response);	
-			break;
-
+			break;		
 		default:
 			break;
 		}
@@ -117,6 +136,43 @@ public class OrderServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+	/**
+	 * é€šè¿‡é¡µé¢æŸ¥è¯¢
+	 * @param request
+	 * @param response
+	 * @return string
+	 */
+	@SuppressWarnings("unchecked")
+	public String searchByPage(HttpServletRequest request,HttpServletResponse response,boolean isSort) {
+		SearchDAO searchDAO = (SearchDAO)DAOFactory.newInstance("Order");
+		//æŸ¥è¯¢é¡µé¢ç¬¬ä¸€é¡µçš„æ‰€æœ‰èœå“ä¿¡æ¯
+		int currenPage = Integer.parseInt(request.getParameter("currentPage"));
+		ArrayList<Order> list = (ArrayList<Order>)searchDAO.searchByPage(currenPage, PageModel.getPageSize());
+		if(isSort) {
+			SortDAO sortDAO = (SortDAO)DAOFactory.newInstance("Order");
+			Order[] dishs = (Order[])list.toArray();
+			list.clear();
+			list.addAll(sortDAO.descSort(dishs));
+		}
+		JSONArray jsonArray = new JSONArray();
+		for(int i =0;i<list.size();i++) {
+			jsonArray.add(JSONObject.fromObject(list.get(i)));
+		}
+		return jsonArray.toString();
+	}
+	/**
+	 * è·å¾—pagemodel
+	 * @param currentPage
+	 * @param pageSize
+	 * @return ä¸€ç»„jsonå¯¹è±¡çš„å­—ç¬¦ä¸²
+	 */	private String getPageModel(HttpServletRequest request,HttpServletResponse response) {
+		SearchDAO searchDAO = (SearchDAO)DAOFactory.newInstance("Order");
+		//åˆ†é¡µä¿¡æ¯
+		PageModel pageModel = new PageModel(searchDAO.getCount());
+		JSONObject jsonObject = JSONObject.fromObject(pageModel);
+		request.setAttribute("DishPageModel", pageModel);
+		return jsonObject.toString();
 	}
 
 }

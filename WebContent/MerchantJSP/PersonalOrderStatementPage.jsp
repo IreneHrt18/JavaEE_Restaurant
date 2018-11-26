@@ -58,7 +58,16 @@
          <td style="text-align:center"><%= order.getUSERNAME()%></td>
          <td style="text-align:center"><%= order.getPRICE()%></td>
          <td style="text-align:center"><%= order.getTIME()%></td>
-         <td style="text-align:center"><%= order.getORDERSTATE() %></td>
+         
+         <td style="text-align:center">
+         <%if(order.getORDERSTATE().equals("未支付")) {%>
+         <a href="#">去支付</a>
+         <%} %>
+         <%if(order.getORDERSTATE().equals("已支付")) { %>
+         <%= order.getORDERSTATE() %>
+         <%} %>
+         </td>
+         
          <td style="text-align:center"><%= order.getCOMMENTSTATE()%></td>
          <%}%>
 		</tbody>
