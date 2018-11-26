@@ -138,8 +138,6 @@ function getlist(num) {
  */
 function getListText(item) {
 	var href="../PersonalServlet?action=statement&ordernumber=";
-	var payHref="../OrderServlet?action=statement&ordernumber=";
-	var commentHref="../OrderServlet?action=statement&ordernumber=";
 	var style="text-align:center";
 	var text = "<tr style="+style+">" +
 		"<td scope='row'><a href="+href + item.ORDERNO + ">"+item.ORDERNO +"</a></td>" +
