@@ -67,4 +67,10 @@ public class UserIMPL implements SearchDAO,ModifyDAO {
 		return baseDAO.singleSQL(sql, params);
 	}
 
+	@Override
+	public int modifyAllByPrimarykey(String primary, String[] params) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

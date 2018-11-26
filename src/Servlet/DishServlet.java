@@ -79,6 +79,9 @@ public class DishServlet extends HttpServlet {
 			case "jumpToDetail":
 				jumpToDetail(request, response);
 				return;
+			case "submitModify":
+				submitModify(request, response);
+				return;
 			}	
 		}else if(action == null && request.getSession().getAttribute("currentDish")!=null) {
 			uploadImg(request, response);
@@ -216,6 +219,19 @@ public class DishServlet extends HttpServlet {
 		ArrayList<Dish> list = searchDAO.searchByPrimaryKey(request.getParameterValues("dishNo"));
 		request.getSession().setAttribute("dishList", list);
 		response.sendRedirect("./MerchantJSP/DishStatement.jsp");
+	}
+	/**
+	 * 提交详情页的修改
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	private void submitModify(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		String[] params = {request.getParameter("description"),request.getParameter("dishName"),request.getParameter("price")};
+		ModifyDAO modifyDAO = (ModifyDAO)DAOFactory.newInstance("Dish");
+		modifyDAO.modifyAllByPrimarykey(request.getParameter("dishNo"), params);
+		jumpToDetail(request, response);
 	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

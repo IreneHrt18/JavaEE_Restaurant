@@ -139,7 +139,8 @@ function getlist(num) {
  */
 function getListText(item) {
 	var text = "<tr>" +
-		"<td scope='row'><a href='../DishServlet?action=jumpToDetail&dishNo="+item.DISHNO+"'>" + item.DISHNO + "</a></td>" +
+		"<td scope='row'><input type='checkbox' class='checkbox' value="+ item.DISHNO +"></td>"+
+		"<td><a href='../DishServlet?action=jumpToDetail&dishNo="+item.DISHNO+"'>" + item.DISHNO + "</a></td>" +
 		"<td> <a href='../DishServlet?action=jumpToDetail&dishNo="+item.DISHNO+"'>" + item.DISHNAME + "</a></td>" +
 		"<td>" + item.PRICE + "</td>" +
 		"<td>" + item.DESCRIPTION + "</td>" +
