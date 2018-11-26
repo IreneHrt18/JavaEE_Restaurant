@@ -82,6 +82,9 @@ $(document).ready(
 			$(".checkbox").attr("checked", false);
 		}
 	}),
+	$(document).on("click","#delete",function deleteDish(){
+		
+	}),
 	// $(document).on("click", "", function sort() {
 	// 	setIsSort(true);
 	// 	if (isSearch == true) {
