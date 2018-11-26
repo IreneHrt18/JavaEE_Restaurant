@@ -91,7 +91,7 @@ $(document).ready(
  * @returns
  */
 function initPage() {
-	$.getJSON("../DishServlet?action=getPageModel",
+	$.getJSON("../OrderServlet?action=getPageModel",
 		function (data, textStatus, jqXHR) {
 			setCurrentPage(data.currentPageNum);
 			setTotalPage(data.totalPageNum);
@@ -110,27 +110,26 @@ function initPage() {
  */
 function getlist(num) {
 	var errorMessage = "糟糕，服务器遇到了错误请重新加载。";
-	var searchMessage = "抱歉，我们并没有找到你所需要的商品。"
 	if (isSearch != true) {
 		if (isSort != true) {
-			var url = "../DishServlet?action=searchByPage&currentPage=" + num;
+			var url = "../OrderServlet?action=searchByPage&currentPage=" + num;
 			setDishList(url, errorMessage, errorMessage);
 		} else {
-			var url = "../DishServlet?action=searchByPageAndSort&currentPage=" + num;
+			var url = "../OrderServlet?action=searchByPageAndSort&currentPage=" + num;
 			setDishList(url, errorMessage, errorMessage);
 		}
 	} else {
 		if (isSort == true) {
-			var url = "../DishServlet?action=searchAndSort&searchText=" + searchText;
-			setDishList(url, errorMessage, searchMessage);
+			var url = "../OrderServlet?action=searchAndSort&searchText=" + searchText;
+			setDishList(url, errorMessage, errorMessage);
 		} else {
 			setCurrentPage(1);
 			setTotalPage(1);
-			var url = "../DishServlet?action=search&searchText=" + searchText;
-			setDishList(url, errorMessage, searchMessage);
+			var url = "../OrderServlet?action=search&searchText=" + searchText;
+			setDishList(url, errorMessage, errorMessage);
 		}
 	}
-	hideButton(num);
+	//hideButton(num);
 }
 /**
  * 获得需要添加的html代码
@@ -138,13 +137,16 @@ function getlist(num) {
  * @returns string
  */
 function getListText(item) {
-	var text = "<tr>" +
-		"<td scope='row'><input type='checkbox' class='checkbox' value="+ item.DISHNO +"></td>"+
-		"<td><a href='../DishServlet?action=jumpToDetail&dishNo="+item.DISHNO+"'>" + item.DISHNO + "</a></td>" +
-		"<td> <a href='../DishServlet?action=jumpToDetail&dishNo="+item.DISHNO+"'>" + item.DISHNAME + "</a></td>" +
+	var href="../OrderServlet?action=statement&ordernumber=";
+	var style="text-align:center";
+	var text = "<tr style="+style+">" +
+		"<td scope='row'><a href="+href + item.ORDERNO + ">"+item.ORDERNO +"</a></td>" +
+		"<td>" + item.USERNO + "</td>" +
+		"<td>" + item.USERNAME + "</td>" +
 		"<td>" + item.PRICE + "</td>" +
-		"<td>" + item.DESCRIPTION + "</td>" +
-		"<td><img src=" + item.IMG + " width='50px' height='50px'></td>" +
+		"<td>" + item.TIME + "</td>" +
+		"<td>" + item.ORDERSTATE +"</td>" +				
+		"<td>" + item.COMMENTSTATE +"</td>" +		
 		"</tr>";
 	return text;
 }
@@ -161,7 +163,7 @@ function setDishList(url, errorMessage, notFindMessage) {
 		datatype: "json",
 		success: function (data) {
 			data = $.parseJSON(data);
-			if (data != "") {
+			if (data != null) {
 				$.each(data, function (index, item) {
 					listText += getListText(item);
 				});

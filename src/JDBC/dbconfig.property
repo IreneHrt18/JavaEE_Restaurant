@@ -1,10 +1,4 @@
 Driver=oracle.jdbc.driver.OracleDriver
-<<<<<<< HEAD
-url=jdbc:oracle:thin:@localhost:1521:myorcl
-username=oldba
-password=ting0818
-=======
 url=jdbc:oracle:thin:@localhost:1521:orcl
 username=c##sa
 password=123456
->>>>>>> f058741ba252d2e80f6959c899416770d2745f4d
