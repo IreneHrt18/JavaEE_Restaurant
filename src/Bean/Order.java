@@ -3,11 +3,6 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import org.apache.naming.java.javaURLContextFactory;
-
-import oracle.sql.TIMESTAMP;
-import sun.awt.util.ThreadGroupUtils;
 public class Order {
 	
 	public String getORDERNO() {
