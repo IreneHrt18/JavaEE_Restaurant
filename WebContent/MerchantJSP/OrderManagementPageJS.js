@@ -185,39 +185,39 @@ function setDishList(url, errorMessage, notFindMessage) {
  * @param currentIndex
  * @returns void
  */
-//function hideButton(currentIndex) {
-//	//设置按钮隐藏
-//	var buttons = document.getElementsByClassName("pageButton");
-//	$.each(buttons, function () {
-//		if (Math.abs(parseInt($(this).val()) - parseInt(currentIndex)) <= parseInt(pageGap)) {
-//			$(this).show();
-//		} else {
-//			$(this).hide();
-//		}
-//	});
-//	//重新设置首页和尾页
-//	$(".pageButton[value='1']").show();
-//	$(".pageButton[value=" + totalPage + "]").show();
-//	//设置省略号
-//	if (parseInt(currentIndex) - parseInt(pageGap) - 1 > 1) {
-//		$(".xx span:first").show();
-//	} else {
-//		$(".xx span:first").hide();
-//	}
-//	if ((parseInt(currentIndex) + parseInt(pageGap) + 1 < totalPage) && totalPage > pageGap + 2) {
-//		$(".xx span:last").show();
-//	} else {
-//		$(".xx span:last").hide();
-//	}
-//	//设置上一页下一页
-//	if (currentIndex == 1) {
-//		$(".prevPage").hide();
-//	} else {
-//		$(".prevPage").show();
-//	}
-//	if (currentIndex == totalPage) {
-//		$(".nextPage").hide();
-//	} else {
-//		$(".nextPage").show();
-//	}
-//}
+function hideButton(currentIndex) {
+	//设置按钮隐藏
+	var buttons = document.getElementsByClassName("pageButton");
+	$.each(buttons, function () {
+		if (Math.abs(parseInt($(this).val()) - parseInt(currentIndex)) <= parseInt(pageGap)) {
+			$(this).show();
+		} else {
+			$(this).hide();
+		}
+	});
+	//重新设置首页和尾页
+	$(".pageButton[value='1']").show();
+	$(".pageButton[value=" + totalPage + "]").show();
+	//设置省略号
+	if (parseInt(currentIndex) - parseInt(pageGap) - 1 > 1) {
+		$(".xx span:first").show();
+	} else {
+		$(".xx span:first").hide();
+	}
+	if ((parseInt(currentIndex) + parseInt(pageGap) + 1 < totalPage) && totalPage > pageGap + 2) {
+		$(".xx span:last").show();
+	} else {
+		$(".xx span:last").hide();
+	}
+	//设置上一页下一页
+	if (currentIndex == 1) {
+		$(".prevPage").hide();
+	} else {
+		$(".prevPage").show();
+	}
+	if (currentIndex == totalPage) {
+		$(".nextPage").hide();
+	} else {
+		$(".nextPage").show();
+	}
+}
