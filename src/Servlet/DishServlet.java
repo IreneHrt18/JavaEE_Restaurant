@@ -102,7 +102,7 @@ public class DishServlet extends HttpServlet {
 		ArrayList<Dish> list = (ArrayList<Dish>)searchDAO.searchByPage(currenPage, PageModel.getPageSize());
 		if(isSort) {
 			SortDAO sortDAO = (SortDAO)DAOFactory.newInstance("Dish");
-			Dish[] dishs = (Dish[])list.toArray();
+			Dish[] dishs = list.toArray(new Dish[list.size()]);
 			list.clear();
 			list.addAll(sortDAO.descSort(dishs));
 		}
@@ -127,7 +127,7 @@ public class DishServlet extends HttpServlet {
 		}
 		if(isSort) {
 			SortDAO sortDAO = (SortDAO)DAOFactory.newInstance("Dish");
-			Dish[] dishs = (Dish[])list.toArray();
+			Dish[] dishs = list.toArray(new Dish[list.size()]);
 			list.clear();
 			list.addAll(sortDAO.descSort(dishs));
 		}
@@ -227,7 +227,6 @@ public class DishServlet extends HttpServlet {
 	 * @throws IOException 
 	 */
 	private void submitModify(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
 		String[] params = {request.getParameter("description"),request.getParameter("dishName"),request.getParameter("price")};
 		ModifyDAO modifyDAO = (ModifyDAO)DAOFactory.newInstance("Dish");
 		modifyDAO.modifyAllByPrimarykey(request.getParameter("dishNo"), params);

@@ -82,18 +82,20 @@ $(document).ready(
 			$(".checkbox").attr("checked", false);
 		}
 	}),
-	$(document).on("click","#delete",function deleteDish(){
-		
+//	$(document).on("click","#delete",function deleteDish(){
+//		
+//	}),
+	$(document).on("click", ".dropdown-item", function sort() {
+		if(isSort){
+			setIsSort(false);
+			$(this).html("排名");
+		}
+		else {
+			setIsSort(true);
+			$(this).html("顺序");
+		}
+		getlist(currentPage);
 	}),
-	// $(document).on("click", "", function sort() {
-	// 	setIsSort(true);
-	// 	if (isSearch == true) {
-
-	// 	} else {
-	// 		getlist(currentPage);
-	// 	}
-
-	// }),
 	initPage()
 );
 /**

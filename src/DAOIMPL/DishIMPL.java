@@ -73,17 +73,17 @@ public class DishIMPL implements SearchDAO,SortDAO,ModifyDAO {
 		}
 		//获得所有含有dishno的订单数量
 		nos = searchDAO.getMuiltCountByParams("dishno", value);
-		for(int i = 0;i<nos.length;i++) {
-			System.out.println(nos[i]);
-		}
-		System.out.println("**************");
+//		for(int i = 0;i<nos.length;i++) {
+//			System.out.println(nos[i]);
+//		}
+//		System.out.println("**************");
 		//快速排序
 		quickSort(nos, 0, nos.length-1, (Dish[])array);
 		
-		for(int i = 0;i<nos.length;i++) {
-			System.out.println(nos[i]);
-		}
-		System.out.println("**************");
+//		for(int i = 0;i<nos.length;i++) {
+//			System.out.println(nos[i]);
+//		}
+//		System.out.println("**************");
 		
 		ArrayList<Dish> list = new ArrayList<>();
 		for(int i = 0;i<array.length;i++) {
