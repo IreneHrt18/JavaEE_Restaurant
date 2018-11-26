@@ -42,12 +42,10 @@
 			</form>
 		</div>
 	</nav>
-
 	<table class="table">
 		<thead>
 			<tr>
-			
-				<th scope='col' id="all">全选</th>
+				<th scope='col'><input type="checkbox" id="all"></th>
 				<th scope="col">菜品编号</th>
 				<th scope="col">菜品名称</th>
 				<th scope="col">菜品价格</th>

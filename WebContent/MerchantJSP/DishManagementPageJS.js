@@ -75,6 +75,13 @@ $(document).ready(
 		}
 		hideButton(currentPage);
 	}),
+	$(document).on("click","#all",function selectAll(){
+		if($("#all").attr("checked")){
+			$(".checkbox").attr("checked",true);
+		}else{
+			$(".checkbox").attr("checked", false);
+		}
+	}),
 	// $(document).on("click", "", function sort() {
 	// 	setIsSort(true);
 	// 	if (isSearch == true) {
