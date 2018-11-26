@@ -82,9 +82,22 @@ $(document).ready(function () {
 			$(".checkbox").attr("checked", false);
 		}
 	});
-	//	$(document).on("click","#delete",function deleteDish(){
-	//		
-	//	}),
+	$(document).on("click", "#deleteDish", function deleteDish() {
+		var dishlist = "";
+		$.each($(".checkbox"), function (index, item) { 
+			 if(item.checked){
+				 dishlist+="dishNo="+item.value+"&";
+			 }
+		});
+		$.ajax({
+			type: "post",
+			url: "../DishServlet?action=deleteDish&"+dishlist,
+			dataType: "text",
+			success: function (response) {
+				initPage();
+			}
+		});
+	});
 	$(document).on("click", ".dropdown-item", function sort() {
 		if (isSort) {
 			setIsSort(false);
@@ -152,9 +165,9 @@ function getlist(num) {
  */
 function getListText(item) {
 	var text = "<tr style ='text-align:center'>" +
-		"<td scope='row'><input type='checkbox' class='checkbox' value=" + item.DISHNO + "></td>" +
-		"<td><a href='../DishServlet?action=jumpToDetail&dishNo=" + item.DISHNO + "' onclick='window.open(this.href);return false'>" + item.DISHNO + "</a></td>" +
-		"<td> <a href='../DishServlet?action=jumpToDetail&dishNo=" + item.DISHNO + "' onclick='window.open(this.href);return false'>" + item.DISHNAME + "</a></td>" +
+		"<td scope='row'><input type='checkbox' class='checkbox' value='" + item.DISHNO + "'></td>" +
+		"<td><a href='../DishServlet?action=jumpToDetail&dishNo=" + item.DISHNO + "'>" + item.DISHNO + "</a></td>" +
+		"<td> <a href='../DishServlet?action=jumpToDetail&dishNo=" + item.DISHNO + "'>" + item.DISHNAME + "</a></td>" +
 		"<td>" + item.PRICE + "</td>" +
 		"<td>" + item.DESCRIPTION + "</td>" +
 		"<td><img src=" + item.IMG + " width='50px' height='50px'></td>" +

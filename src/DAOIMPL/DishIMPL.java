@@ -4,13 +4,15 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import Bean.Dish;
+import DAO.DeleteDAO;
+import DAO.InsertDAO;
 import DAO.ModifyDAO;
 import DAO.SearchDAO;
 import DAO.SortDAO;
 import JDBC.BaseDAO;
 import JDBC.DAOFactory;
 
-public class DishIMPL implements SearchDAO,SortDAO,ModifyDAO {
+public class DishIMPL implements SearchDAO,SortDAO,ModifyDAO,DeleteDAO,InsertDAO {
 
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -172,6 +174,23 @@ public class DishIMPL implements SearchDAO,SortDAO,ModifyDAO {
 	public int getCount(String viewName) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public int[] deleteByPrimaryKey(String[] primaryKey) {
+		// TODO 删除dish
+		BaseDAO baseDAO = (BaseDAO)DAOFactory.newInstance("BaseDAO");
+		String sql = "delete from dish  where dishno = ?";
+		return baseDAO.multipleSQL(sql, primaryKey);
+	}
+
+	@Override
+	public void insert(String[] params) {
+		// TODO 插入记录
+		String sql = " insert into dish(dishNo, dishName, price, description,img) "
+				+ "values( ?,?,?,?,?)";
+		BaseDAO baseDAO = (BaseDAO)DAOFactory.newInstance("BaseDAO");
+		baseDAO.singleSQL(sql, params);
 	}
 
 }

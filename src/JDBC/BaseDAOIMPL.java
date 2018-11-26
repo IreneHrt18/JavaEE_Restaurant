@@ -128,7 +128,7 @@ public class BaseDAOIMPL extends BaseDAO {
 			pStatement = connection.prepareStatement(sql);
 			if (params != null) {
 				for (int i = 0; i < params.length; i++) {
-					pStatement.setObject(i + 1, params[i]);
+					pStatement.setObject(1, params[i]);
 					pStatement.addBatch();
 				}
 			}

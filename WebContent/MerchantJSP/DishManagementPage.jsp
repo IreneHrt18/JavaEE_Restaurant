@@ -70,9 +70,13 @@
 	</table>
 
 	<div class="xx">
+		<button id="deleteDish" class="btn btn-primary" style="float: left; margin-left: 10px; ">删除</button>
+		<button class="btn btn-primary" style="float: left; margin-left: 10px;" onclick="window.location.href='../DishServlet?action=jumpToDetail'";>添加</button>
 		<nav aria-label="Page navigation example">
 			<ul class="pagination justify-content-end">
-				<li class="page-item"><button class="prevPage page-link" style="margin-right: 5px">上一页</button></li>
+				<li class="page-item">
+					<button class="prevPage page-link" style="margin-right: 5px">上一页</button>
+				</li>
 				<%	
 				SearchDAO searchDAO = (SearchDAO)DAOFactory.newInstance("Dish");
 				PageModel pageModel = new PageModel(searchDAO.getCount()); %>
@@ -86,10 +90,11 @@
 				<span class="page-link" style="margin-right: 5px">...</span>
 				<% } %>
 				<% } %>
-				<li class="page-item"><button class="nextPage page-link" style="margin-right: 5px">下一页</button></li>
+				<li class="page-item">
+					<button class="nextPage page-link" style="margin-right: 5px">下一页</button>
+				</li>
 				</li>
 			</ul>
-
 	</div>
 </body>
 
