@@ -56,6 +56,18 @@ pageEncoding = "utf-8" %>
                     }
                 });
             });
+            //保存修改
+            $(document).on("click",":submit",function () {
+                $.ajax({
+                    type: "post",
+                    url: "../DishServlet/action=submitModify",
+                    data: $("#detail").serialize(),
+                    dataType: "text",
+                    success: function (response) {
+                        alert("修改成功");
+                    }
+                });
+            });
         });        
     </script>
 
@@ -72,7 +84,6 @@ pageEncoding = "utf-8" %>
                         <form action="../DishServlet?action=upload" id="imgForm" enctype="multipart/form-data">
                             <img class="card-img-top" src="<%=currentDish.getIMG() %>" alt="Card image cap" style="width:600px; height: 200px; cursor: pointer;">
                             <input type="file" class="form-control-file" id="DishPicFile" hidden multiple>
-                            <input type="submit" hidden>
                         </form>
                     </div>
                 </div>
@@ -80,22 +91,22 @@ pageEncoding = "utf-8" %>
         </div>
         <div class="card" style="align-self: center; width: 60%; height: 60%; position: relative;margin: 0 auto 0 auto;">
             <div>
-                <form>
+                <form id="detail">
                     <div class="form-group">
                         <label for="exampleInputPassword1">菜品描述</label>
-                        <input type="text" class="form-control" value="<%=currentDish.getDESCRIPTION() %>">
+                        <input type="text" class="form-control" name="description" value="<%=currentDish.getDESCRIPTION() %>">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">菜品编号</label>
-                        <input type="text" class="form-control" value="<%=currentDish.getDISHNO() %>">
+                        <input type="text" class="form-control" name="dishNo" value="<%=currentDish.getDISHNO() %>">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">菜品名称</label>
-                        <input type="text" class="form-control" value="<%=currentDish.getDISHNAME() %>">
+                        <input type="text" class="form-control" name="dishName" value="<%=currentDish.getDISHNAME() %>">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">菜品价格</label>
-                        <input type="text" class="form-control" value="<%=currentDish.getPRICE() %>">
+                        <input type="text" class="form-control" name="price" value="<%=currentDish.getPRICE() %>">
                     </div>
                     <button type="submit" class="btn btn-primary">提交</button>
                 </form>

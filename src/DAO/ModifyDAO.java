@@ -7,5 +7,11 @@ public interface ModifyDAO {
 	 * @return int
 	 */
 	public int modifyImgUrl(String[] params);
-	
+	/**
+	 * 修改除主键外的所有值
+	 * @param primary
+	 * @param params
+	 * @return
+	 */
+	public int modifyAllByPrimarykey(String primary,String[] params);
 }
