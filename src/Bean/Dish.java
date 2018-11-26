@@ -7,6 +7,15 @@ public class Dish {
 	private String IMG;
 	private BigDecimal  PRICE;
 	
+	public Dish() {
+		// TODO Auto-generated constructor stub
+		this.DISHNAME = "";
+		this.DISHNO="";
+		this.DESCRIPTION="";
+		this.IMG="";
+		this.PRICE=new BigDecimal("0");
+	}
+	
 public String getDISHNO() {
 		return DISHNO;
 	}

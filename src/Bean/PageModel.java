@@ -7,7 +7,7 @@ public class PageModel {
 	private int totalCount;
 	private int pageGap;
 	static {
-		pageSize = 6;
+		pageSize = 10;
 	}
 	
 	public PageModel(int count) {

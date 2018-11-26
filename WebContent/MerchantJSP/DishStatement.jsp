@@ -17,8 +17,7 @@ pageEncoding = "utf-8" %>
 
     </head>
     <%      
-    		ArrayList<Dish> list = (ArrayList<Dish>)request.getSession().getAttribute("dishList");
-    		Dish currentDish = list.get(0);
+    		Dish currentDish = (Dish)request.getSession().getAttribute("dish");
     		//存储菜品编号
     		request.getSession().setAttribute("currentDish", currentDish.getDISHNO());
     %>
