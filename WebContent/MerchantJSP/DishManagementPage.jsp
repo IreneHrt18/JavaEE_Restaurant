@@ -46,6 +46,8 @@
 	<table class="table">
 		<thead>
 			<tr>
+			
+				<th scope='col' id="all">全选</th>
 				<th scope="col">菜品编号</th>
 				<th scope="col">菜品名称</th>
 				<th scope="col">菜品价格</th>
@@ -57,6 +59,7 @@
 
 		</tbody>
 	</table>
+	
 	<div class="xx">
 		<button class="prevPage">上一页</button>
 		<%PageModel pageModel = new PageModel(3); %>

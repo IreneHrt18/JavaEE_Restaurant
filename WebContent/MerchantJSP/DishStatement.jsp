@@ -1,6 +1,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="Bean.Dish"%>
-<%@page language = "java" contentType = "text/html; charset=utf-8"
+<%@page language = "java" contentType = "text/html; charset= utf-8"
 pageEncoding = "utf-8" %>
 
     <html lang="en">
@@ -19,7 +19,6 @@ pageEncoding = "utf-8" %>
     <%      
     		ArrayList<Dish> list = (ArrayList<Dish>)request.getSession().getAttribute("dishList");
     		Dish currentDish = list.get(0);
-    		request.getSession().removeAttribute("dishList");
     		//存储菜品编号
     		request.getSession().setAttribute("currentDish", currentDish.getDISHNO());
     %>
@@ -56,18 +55,6 @@ pageEncoding = "utf-8" %>
                     }
                 });
             });
-            //保存修改
-            $(document).on("click",":submit",function () {
-                $.ajax({
-                    type: "post",
-                    url: "../DishServlet/action=submitModify",
-                    data: $("#detail").serialize(),
-                    dataType: "text",
-                    success: function (response) {
-                        alert("修改成功");
-                    }
-                });
-            });
         });        
     </script>
 
@@ -91,14 +78,14 @@ pageEncoding = "utf-8" %>
         </div>
         <div class="card" style="align-self: center; width: 60%; height: 60%; position: relative;margin: 0 auto 0 auto;">
             <div>
-                <form id="detail">
+                <form action="../DishServlet?action=submitModify" method="POST">
                     <div class="form-group">
                         <label for="exampleInputPassword1">菜品描述</label>
                         <input type="text" class="form-control" name="description" value="<%=currentDish.getDESCRIPTION() %>">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">菜品编号</label>
-                        <input type="text" class="form-control" name="dishNo" value="<%=currentDish.getDISHNO() %>">
+                        <input type="text" class="form-control" name="dishNo" value="<%=currentDish.getDISHNO() %>" readonly>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">菜品名称</label>
@@ -108,7 +95,7 @@ pageEncoding = "utf-8" %>
                         <label for="exampleInputPassword1">菜品价格</label>
                         <input type="text" class="form-control" name="price" value="<%=currentDish.getPRICE() %>">
                     </div>
-                    <button type="submit" class="btn btn-primary">提交</button>
+                    <input type="submit" id="dishSubmit" class="btn btn-primary" value="提交">
                 </form>
             </div>
         </div>

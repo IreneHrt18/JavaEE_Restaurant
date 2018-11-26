@@ -224,11 +224,14 @@ public class DishServlet extends HttpServlet {
 	 * 提交详情页的修改
 	 * @param request
 	 * @param response
+	 * @throws IOException 
 	 */
-	private void submitModify(HttpServletRequest request, HttpServletResponse response) {
+	private void submitModify(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
 		String[] params = {request.getParameter("description"),request.getParameter("dishName"),request.getParameter("price")};
 		ModifyDAO modifyDAO = (ModifyDAO)DAOFactory.newInstance("Dish");
 		modifyDAO.modifyAllByPrimarykey(request.getParameter("dishNo"), params);
+		jumpToDetail(request, response);
 	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

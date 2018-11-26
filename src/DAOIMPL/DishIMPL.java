@@ -153,7 +153,7 @@ public class DishIMPL implements SearchDAO,SortDAO,ModifyDAO {
 	@Override
 	public int modifyAllByPrimarykey(String primary, String[] params) {
 		// TODO Auto-generated method stub
-		String sql = "update dish set DESCRIPTION = ? , set DISHNAME = ? ,set PRICE = ? where dishno = "+primary;
+		String sql = "update dish set DESCRIPTION = ? ,DISHNAME = ? ,PRICE = ? where dishno = "+primary;
 		BaseDAO baseDAO = (BaseDAO)DAOFactory.newInstance("BaseDAO");
 		return baseDAO.singleSQL(sql, params);
 	}
