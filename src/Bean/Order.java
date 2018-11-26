@@ -1,11 +1,18 @@
 package Bean;
+import oracle.sql.TIMESTAMP;
+
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
-import org.apache.naming.java.javaURLContextFactory;
 public class Order {
-	
+
+	public Order() {
+		this.dishes=new ArrayList<Dish_Order>();
+	}
+
 	public String getORDERNO() {
 		return ORDERNO;
 	}
@@ -24,11 +31,10 @@ public class Order {
 	public void setPRICE(BigDecimal pRICE) {
 		PRICE = pRICE;
 	}
-	public String getTIME() {
-		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String dateString=formatter.format(TIME);
-		return dateString;
-		
+	public Timestamp getTIME() {
+//		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		String dateString=formatter.format(TIME);
+		return new Timestamp(TIME.getTime());
 	}
 	public void setTIME(Date tIME) {
 		TIME = tIME;
@@ -52,6 +58,15 @@ public class Order {
 	private Date TIME;
 	private String	ORDERSTATE;
 	private String COMMENTSTATE;
-	
+
+	public ArrayList<Dish_Order> getDishes() {
+		return dishes;
+	}
+
+	public void setDishes(ArrayList<Dish_Order> dishes) {
+		this.dishes = dishes;
+	}
+
+	private ArrayList<Dish_Order> dishes;
 	
 }

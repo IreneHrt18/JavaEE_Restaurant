@@ -12,7 +12,7 @@
 
 
 order
-��orderNo��dishNo),comment,price,time,index
+��orderNo��dishNo),comments,price,time,index
 user_order
 (userNo,orderNo),orderState[boolean],commentState[boolean]
 coupon
