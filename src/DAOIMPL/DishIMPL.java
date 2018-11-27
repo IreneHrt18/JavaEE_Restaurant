@@ -193,4 +193,22 @@ public class DishIMPL implements SearchDAO,SortDAO,ModifyDAO,DeleteDAO,InsertDAO
 		baseDAO.singleSQL(sql, params);
 	}
 
+	@Override
+	public boolean alterObj(Object obj) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteObj(Object obj) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addObj(Object obj) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

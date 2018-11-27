@@ -4,13 +4,15 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import Bean.Dish;
+import Bean.Dish_Order;
 import Bean.Order;
+import DAO.InsertDAO;
 import DAO.SearchDAO;
 import JDBC.BaseDAO;
 import JDBC.BaseDAOIMPL;
 import JDBC.DAOFactory;
 
-public class OrderIMPL implements SearchDAO {
+public class OrderIMPL extends BaseDAOIMPL implements SearchDAO,InsertDAO {
 	@SuppressWarnings("rawtypes")
 	@Override
 	/**
@@ -112,5 +114,27 @@ public class OrderIMPL implements SearchDAO {
 		String sql = "select * from view_Order where userNo=? AND orderno = ?";
 		ArrayList list = baseDAO.searchOBJ(sql,params, Order.class);
 		return list;
+	}
+	@Override
+	public void insert(String[] params) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public boolean addObj(Object obj) {
+		Order order =(Order) obj;
+		String sql ="insert into orders(orderno,userno,price,time,commentstate,orderstate)" +
+				" values(?,?,?,?,?,?)";
+		Object[] param={order.getORDERNO(),order.getUSERNO(),order.getPRICE(),
+				order.getTIME(),order.getCOMMENTSTATE(),order.getORDERSTATE()};
+		modifyObj(sql,param);
+		for (Dish_Order dish:
+			 order.getDishes()) {
+			String subSql="insert into order_dish(orderno,dishno,comments,dishcount) values(?,?,?,?)";
+			Object []subParam={dish.getOrderno(),dish.getDishno(),dish.getComments(),dish.getDishcount()};
+			modifyObj(subSql,subParam);
+		}
+
+		return true;
 	}
 }

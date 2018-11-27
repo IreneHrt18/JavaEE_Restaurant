@@ -94,6 +94,7 @@ $(document).ready(function () {
 			url: "../DishServlet?action=deleteDish&"+dishlist,
 			dataType: "text",
 			success: function (response) {
+				
 				initPage();
 			}
 		});

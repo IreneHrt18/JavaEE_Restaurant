@@ -2,6 +2,7 @@ package Bean;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 public class Order {
 	
@@ -23,15 +24,9 @@ public class Order {
 	public void setPRICE(BigDecimal pRICE) {
 		PRICE = pRICE;
 	}
-//	public String getTIME() {
-//		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
-//		String dateString=formatter.format(TIME);
-//		return dateString;
-//		
-//	}
 	public Timestamp getTIME() {
-	return (Timestamp)TIME;	
-}
+		return new Timestamp(TIME.getTime());
+	}
 	public void setTIME(Date tIME) {
 		TIME = tIME;
 		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
@@ -69,6 +64,18 @@ public class Order {
 	public String getTIMESTRING() {
 		return TIMESTRING;
 	}
+	public Order() {
+		this.dishes=new ArrayList<Dish_Order>();
+	}
+	public ArrayList<Dish_Order> getDishes() {
+		return dishes;
+	}
+
+	public void setDishes(ArrayList<Dish_Order> dishes) {
+		this.dishes = dishes;
+	}
+
+	private ArrayList<Dish_Order> dishes;
 
 	
 }

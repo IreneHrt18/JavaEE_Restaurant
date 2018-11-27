@@ -6,4 +6,10 @@ public interface InsertDAO {
 	 * @param params
 	 */
 	public void insert(String[] params);
+	/**
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	public boolean addObj(Object obj );
 }

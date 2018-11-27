@@ -4,12 +4,13 @@ package DAOIMPL;
 import java.util.ArrayList;
 
 import Bean.User;
+import DAO.InsertDAO;
 import DAO.ModifyDAO;
 import DAO.SearchDAO;
 import JDBC.BaseDAO;
 import JDBC.BaseDAOIMPL;
 
-public class UserIMPL implements SearchDAO,ModifyDAO {
+public class UserIMPL extends BaseDAOIMPL implements SearchDAO,ModifyDAO,InsertDAO {
 
 	@Override
 	public ArrayList searchByPrimaryKey(String[] params) {
@@ -89,6 +90,30 @@ public class UserIMPL implements SearchDAO,ModifyDAO {
 	public int getCount(String viewName) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public boolean alterObj(Object obj) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteObj(Object obj) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void insert(String[] params) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean addObj(Object obj) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
