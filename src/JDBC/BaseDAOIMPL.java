@@ -226,19 +226,21 @@ public class BaseDAOIMPL extends BaseDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        try {
-            conn = Helper.getConnection();
-            // 创建statement对象
-            ps = conn.prepareStatement(sql);
-            ParameterMetaData pm = ps.getParameterMetaData();
-            for (int i = 1; i <= pm.getParameterCount(); i++) {
-                ps.setObject(i, params[i-1]);
+        if(params!=null) {
+        	try {
+                conn = Helper.getConnection();
+                // 创建statement对象
+                ps = conn.prepareStatement(sql);
+                ParameterMetaData pm = ps.getParameterMetaData();
+                for (int i = 1; i <= pm.getParameterCount(); i++) {
+                    ps.setObject(i, params[i-1]);
+                }
+                return ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                Helper.free(rs, ps, conn);
             }
-            return ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Helper.free(rs, ps, conn);
         }
         return 0;
     }

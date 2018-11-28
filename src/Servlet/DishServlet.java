@@ -199,7 +199,7 @@ public class DishServlet extends HttpServlet {
 					fileItem.delete();
 					//修改数库中的菜品对应url
 					ModifyDAO modifyDAO = (ModifyDAO)DAOFactory.newInstance("Dish");
-					String[] params= {properties.getProperty("img") + newFileName,(String)request.getSession().getAttribute("currentDish")};
+					String[] params= {"Image/" + newFileName,(String)request.getSession().getAttribute("currentDish")};
 					modifyDAO.modifyImgUrl(params);
 					request.getSession().removeAttribute("currentDish");
 					}

@@ -18,9 +18,16 @@ public class DishIMPL implements SearchDAO,SortDAO,ModifyDAO,DeleteDAO,InsertDAO
 	@Override
 	public ArrayList searchAll() {
 		// TODO Auto-generated method stub
-		return null;
-	}
+		BaseDAO baseDAO = (BaseDAO)DAOFactory.newInstance("BaseDAO");
+		String sql = "select * from dish ";
 
+		ArrayList list = baseDAO.searchOBJ(sql,Dish.class);
+		return list;
+	}
+	public ArrayList<Dish> sortAll(ArrayList<Dish> dishes,int order) {
+		dishes.sort(new Dish.DishCompar(order));
+		return dishes;
+	}
 	@SuppressWarnings("rawtypes")
 	@Override
 	public ArrayList searchByPrimaryKey(String[] params) {

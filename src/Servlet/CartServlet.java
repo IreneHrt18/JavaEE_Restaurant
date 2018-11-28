@@ -33,11 +33,9 @@ public class CartServlet extends HttpServlet {
             addToCart(req,resp);
         else
             modifyCart(req,resp);
-
-
     }
 
-    private void settle(HttpServletRequest req, HttpServletResponse resp) {
+    private void settle(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Order order =new Order();
         User user=(User)req.getSession().getAttribute("user");
         order.setORDERNO(String.valueOf(System.currentTimeMillis()));
@@ -47,6 +45,13 @@ public class CartServlet extends HttpServlet {
         order.setPRICE(BigDecimal.valueOf((Integer)req.getSession().getAttribute("totalPrice")));
         order.setTIME(new Date());
         ArrayList<Cart> carts=(ArrayList<Cart>)req.getSession().getAttribute("allCarts");
+        if(carts.size()<=0) {
+        	resp.getWriter().println("<script>"
+        			+ " alert('您的购物车是空的哟，请添加商品到你的购物车吧~'); "
+        			+" window.location.href='./CustomerJSP/CartPage.jsp'; "
+        			+ "</script>");
+        	return;
+        }
         for (Cart cart :
                 carts) {
             Dish_Order dish = new Dish_Order();
@@ -57,6 +62,8 @@ public class CartServlet extends HttpServlet {
             order.getDishes().add(dish);
         }
         new OrderIMPL().addObj(order);
+        resp.sendRedirect("./PersonalServlet?action=statment&ordernumber="+order.getORDERNO());
+        return;
     }
 
     private void trunc(HttpServletRequest req, HttpServletResponse resp) {
@@ -67,9 +74,8 @@ public class CartServlet extends HttpServlet {
     private void toCartPage(HttpServletRequest req, HttpServletResponse resp) {
         try {
 
-            RequestDispatcher requestDispatcher=req.getRequestDispatcher("CartPage.jsp");
+            RequestDispatcher requestDispatcher=req.getRequestDispatcher("./CustomerJSP/CartPage.jsp");
             requestDispatcher.forward(req,resp);
-
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -100,7 +106,7 @@ public class CartServlet extends HttpServlet {
         cartIMPL.addObj(cart);
         try {
                 RequestDispatcher requestDispatcher=req.getRequestDispatcher(
-                        "GetMenues.jsp");
+                        "./CustomerJSP/GetMenues.jsp");
                 //如何舍弃url中原有的“CartServlet.jsp”
                 requestDispatcher.forward(req,resp);
 

@@ -16,21 +16,29 @@
 	 crossorigin="anonymous">
 
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" charset="UTF-8"></script>
-	<script src="./DishManagementPageJS.js" charset="UTF-8" type="text/javascript">	</script>
+	<script src="DishManagementPageJS.js" charset="UTF-8" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
 	 crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
 	 crossorigin="anonymous"></script>
-
+<style>
+	tr{
+		background-color: white;
+		opacity: 0.6;
+		margin-top: 10px;
+		border-radius: 5px;		
+		margin-bottom: 10px;
+	}
+</style>
 
 </head>
 
-<body>
+<body style="background-image:url('../Image/disk.jpg'); background-size: 100% auto; ">
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item "><a class="nav-link" href="./OrderManagementPage.jsp">订单信息</a>
+				<li class="nav-item "><a class="nav-link" href="OrderManagementPage.jsp">订单信息</a>
 				</li>
 				<li class="nav-item"><a class="nav-link" href="./DishManagementPage.jsp">菜品信息</a>
 				</li>
@@ -54,7 +62,6 @@
 	</nav>
 	<table class="table">
 		<thead>
-
 			<tr style="text-align:center">
 				<th scope='col'><input type="checkbox" id="all"></th>
 				<th scope="col">菜品编号</th>
@@ -77,9 +84,7 @@
 				<li class="page-item">
 					<button class="prevPage page-link" style="margin-right: 5px">上一页</button>
 				</li>
-				<%	
-				SearchDAO searchDAO = (SearchDAO)DAOFactory.newInstance("Dish");
-				PageModel pageModel = new PageModel(searchDAO.getCount()); %>
+				<%	PageModel pageModel = (PageModel)request.getSession().getAttribute("pageModel"); %>
 				<%  for(int i = 0;i<pageModel.getTotalPageNum();i++){ %>
 				<li class="page-item">
 					<button class="pageButton page-link" style="margin-right: 5px" value="<%=i+1 %>">
@@ -95,6 +100,7 @@
 				</li>
 				</li>
 			</ul>
+		</nav>
 	</div>
 </body>
 

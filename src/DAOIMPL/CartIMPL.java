@@ -15,9 +15,7 @@ public class CartIMPL extends BaseDAOIMPL implements SearchDAO, InsertDAO, Modif
 
         String sql="select dishname ,price,img,dishno,dishcount,userno  from all_carts where" +
                 " userno=? ";
-        //获取用户id
-        Object userno[]={params[0]};
-        ArrayList<Cart> list = searchOBJ(sql,userno, Cart.class);
+        ArrayList<Cart> list = searchOBJ(sql,params, Cart.class);
 
         return list;
     }

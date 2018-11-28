@@ -1,6 +1,7 @@
 package Servlet;
 
 
+
 import Bean.User;
 import DAOIMPL.UserIMPL;
 
@@ -36,10 +37,12 @@ public class SignupServlet extends HttpServlet {
         String password =req.getParameter("password");
         Date date =new Date();
 
-        //bug
         User user=new User();
+        user.setUSERNO("0");
+        user.setUSERNAME(username);
+        user.setPASSWORD(password);
 
-        if( new UserIMPL().addObj(user))
+        if(new UserIMPL().addObj(user))
         {
             RequestDispatcher requestDispatcher=req.getRequestDispatcher("/UsersPage/LoginOrSignup.jsp");
             try {
