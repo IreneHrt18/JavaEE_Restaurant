@@ -24,12 +24,12 @@
     <div class="container-fluid">
         <div class="row align-items-center">
             <div class="col-4">
-                <h1 class="card-title">订单详情</h1>
-                <h6 class="card-text">菜品内容</h6>
-                <h7 class="card-subtitle">菜品方案</h7>
+                <h1 class="card-title">商家界面</h1>
+                <h6 class="card-text">订单详情</h6>
+                <h7 class="card-subtitle"></h7>
             </div>
             <div class="col-7" style="width:200px;height:200px;overflow:hidden;">
-                <h1 class="card-title">订单详情</h1>
+                <h1 class="card-title"></h1>
             </div>
         </div>
     </div>
@@ -65,13 +65,13 @@
 	</table>
 	</div>
 	<div class="alert alert-primary">
-	<%ArrayList<Dish> list=(ArrayList)request.getAttribute("dishlist"); 
+	<%ArrayList<Dish> list=(ArrayList)request.getAttribute("dishlist");
 	Iterator<Dish> i=list.iterator();
 	while(i.hasNext()) {
 		Dish dish=i.next();%>	   
-	    <div class="card" style="width: 70%; height: 100px;">        
+	    <div class="card" style="width: 70%; height: 150px;">        
         <div class="card-body">
-        <div style="float:left; width:60px; height:50px;"><img class="card-img-top" src="bg.jpg" alt="Card image cap"></div>
+        <div style="float:left; width:60px; height:50px;"><img src="<%=dish.getIMG() %>" width='50px' height='50px' ></div>
         <h5 class="card-title"><%= dish.getDISHNAME()%></h5>
         <div style="float:right; width: 100px; height: 100px"><p class="card-text"><%= dish.getDESCRIPTION()%></p></div>
          <p class="card-text"><%= dish.getPRICE()%></p>

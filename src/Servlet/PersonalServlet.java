@@ -174,6 +174,7 @@ public class PersonalServlet extends HttpServlet {
 		case "statement":
 			//获取订单号
 			ordernumber=request.getParameter("ordernumber");
+			if(null!=ordernumber) {
 			ArrayList<Order> orderList=searchCurrentOrder(ordernumber,UserNo);
             request.setAttribute("orderList", orderList);
             //查询订单中的菜品
@@ -182,6 +183,7 @@ public class PersonalServlet extends HttpServlet {
             //跳转订单详情业
         	RequestDispatcher rDispatcher = request.getRequestDispatcher("./MerchantJSP/PersonalOrderStatementPage.jsp");
         	rDispatcher.forward(request, response);	
+			}
 			break;
 		case "searchUser":
 			String userNo = request.getParameter("searchText");

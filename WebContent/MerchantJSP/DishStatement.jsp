@@ -68,7 +68,7 @@ pageEncoding = "utf-8" %>
                     </div>
                     <div class="col-7" style="width:200px;height:200px;overflow:hidden;">
                         <form action="../DishServlet?action=upload" id="imgForm" enctype="multipart/form-data">
-                            <img class="card-img-top" src="<%=currentDish.getIMG() %>" alt="Card image cap" style="width:600px; height: 200px; cursor: pointer;">
+                            <img class="card-img-top" src="../<%=currentDish.getIMG() %>" alt="Card image cap" style="width:600px; height: 200px; cursor: pointer;">
                             <input type="file" class="form-control-file" id="DishPicFile" hidden multiple>
                         </form>
                     </div>

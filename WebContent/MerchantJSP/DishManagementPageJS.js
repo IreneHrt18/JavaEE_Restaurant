@@ -94,6 +94,7 @@ $(document).ready(function () {
 			url: "../DishServlet?action=deleteDish&"+dishlist,
 			dataType: "text",
 			success: function (response) {
+				alert("删除成功");
 				initPage();
 			}
 		});
@@ -170,7 +171,7 @@ function getListText(item) {
 		"<td> <a href='../DishServlet?action=jumpToDetail&dishNo=" + item.DISHNO + "'>" + item.DISHNAME + "</a></td>" +
 		"<td>" + item.PRICE + "</td>" +
 		"<td>" + item.DESCRIPTION + "</td>" +
-		"<td><img src=" + item.IMG + " width='50px' height='50px'></td>" +
+		"<td><img src='../" + item.IMG + "' width='50px' height='50px'></td>" +
 		"</tr>";
 	return text;
 }

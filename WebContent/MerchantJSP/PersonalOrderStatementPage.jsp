@@ -24,12 +24,16 @@
     <div class="container-fluid">
         <div class="row align-items-center">
             <div class="col-4">
-                <h1 class="card-title">订单详情</h1>
-                <h6 class="card-text">菜品内容</h6>
-                <h7 class="card-subtitle">菜品方案</h7>
+        <%ArrayList<Order> userNameList=(ArrayList)request.getAttribute("orderList");
+		Iterator<Order> user=userNameList.iterator();
+		while(user.hasNext()) {
+		Order order=user.next();%>
+                <h1 class="card-title"><%= order.getUSERNAME()%>个人订单</h1><%} %>
+                <h6 class="card-text">订单详情</h6>
+                <h7 class="card-subtitle"></h7>
             </div>
             <div class="col-7" style="width:200px;height:200px;overflow:hidden;">
-                <h1 class="card-title">订单详情</h1>
+                <h1 class="card-title"></h1>
             </div>
         </div>
     </div>
@@ -73,22 +77,45 @@
 		</tbody>
 	</table>
 	</div>
-	<div class="alert alert-primary">
+<div id="bodayview" style="background-color:beige;">
+
+<div id="card">
 	<%ArrayList<Dish> list=(ArrayList)request.getAttribute("dishlist"); 
 	Iterator<Dish> i=list.iterator();
 	while(i.hasNext()) {
 		Dish dish=i.next();%>	   
-	    <div class="card" style="width: 70%; height: 100px;">        
+	<div class="card" style="float:left; width: 70%; height: 150px; background-color: aliceblue;opacity: 0.8;margin: 15px;">        
         <div class="card-body">
-        <div style="float:left; width:60px; height:50px;"><img class="card-img-top" src="bg.jpg" alt="Card image cap"></div>
-        <h5 class="card-title"><%= dish.getDISHNAME()%></h5>
-        <div style="float:right; width: 100px; height: 100px"><p class="card-text"><%= dish.getDESCRIPTION()%></p></div>
-         <p class="card-text"><%= dish.getPRICE()%></p>
+            <div><img  style="float:left;" src="<%=dish.getIMG()%>" width='80px' height='80px'></div>
+            <h5 style="position:relative; margin: auto auto auto 30%"><%= dish.getDISHNAME()%></h5>
+            <div style="float:right;"><p class="card-text"><%= dish.getDESCRIPTION()%></p></div>
+            <p style="position:relative; margin: auto auto auto 30%"><%= dish.getPRICE()%>￥</p>
 		</div>
 	</div>
 	<%}%>
-	
-	</div>
+</div>
+
+	           <div class="col-3" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header">
+                                    商家公告
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-text">
+                                       写点什么
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
 	
 </body>
 </html>

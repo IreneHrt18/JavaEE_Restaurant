@@ -26,6 +26,20 @@
 </head>
 
 <body>
+<div class="jumbotron p-3 p-md-2 text-white rounded bg-dark">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-4">
+                <h1 class="card-title">商家菜品</h1>
+                <h6 class="card-text">菜品浏览</h6>
+                <h7 class="card-subtitle"></h7>
+            </div>
+            <div class="col-7" style="width:200px;height:200px;overflow:hidden;">
+                <h1 class="card-title"></h1>
+            </div>
+        </div>
+    </div>
+</div>
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
