@@ -2,3 +2,4 @@ BaseDAO = JDBC.BaseDAOIMPL
 Dish = DAOIMPL.DishIMPL
 DishOrder=DAOIMPL.DishOrderIMPL
 Order = DAOIMPL.OrderIMPL
+User = DAOIMPL.UserIMPL

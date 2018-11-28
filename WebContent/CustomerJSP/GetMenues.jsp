@@ -154,6 +154,10 @@
                                                                 <h7><%=menu.getDESCRIPTION()%></h7>
                                                             </div>
                                                         </div>
+                                                        <div class="row">
+                                                        <table>
+                                                        </table>
+                                                        </div>
                                                     </div>
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal -->
