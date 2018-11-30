@@ -60,7 +60,7 @@
 			</form>
 		</div>
 	</nav>
-	<table class="table">
+	<table class="table" style="padding: 10px;">
 		<thead>
 			<tr style="text-align:center">
 				<th scope='col'><input type="checkbox" id="all"></th>

@@ -60,15 +60,11 @@ public class CartIMPL extends BaseDAOIMPL implements SearchDAO, InsertDAO, Modif
 
     @Override
     public boolean addObj(Object obj) {
-        String sql="insert into user_cart(dishno,userno,dishcount)" +
+        String sql="insert into user_cart(dishno,userno,dishcount) " +
                 "values(?,?,?) ";
         Cart cart=(Cart) obj;
-
-        Object para[]={cart.getDISHNO(),
-                cart.getUserno(),
-                1
-        };
-        modifyObj(sql,para);
+        String para[]={cart.getDISHNO(),cart.getUserno(),"1"};
+        singleSQL(sql,para);
         return true;
     }
 
@@ -77,10 +73,8 @@ public class CartIMPL extends BaseDAOIMPL implements SearchDAO, InsertDAO, Modif
         String sql="update user_cart set dishcount =? where dishno=? and userno=?";
         Cart cart=(Cart) obj;
 
-        Object para[]={cart.getDishCount(),cart.getDISHNO(),
-                cart.getUserno(),
-        };
-        modifyObj(sql,para);
+        Object para[]={cart.getDishCount(),cart.getDISHNO(),cart.getUserno()};
+        singleSQL(sql,para);
         return true;
     }
 

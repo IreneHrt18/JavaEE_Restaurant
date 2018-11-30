@@ -29,8 +29,11 @@ public class CartServlet extends HttpServlet {
             trunc(req, resp);
         else if(req.getParameter("settle")!=null)
             settle(req,resp);
-        else if(editAmount==null && req.getParameter("reedit")==null)
-            addToCart(req,resp);
+        else if(editAmount==null && req.getParameter("reedit")==null) {
+        	addToCart(req,resp);
+        	resp.sendRedirect("./CustomerJSP/GetMenues.jsp");
+        	return;
+        }
         else
             modifyCart(req,resp);
     }
@@ -93,28 +96,13 @@ public class CartServlet extends HttpServlet {
     private void addToCart(HttpServletRequest req, HttpServletResponse resp) {
 
         String dishid= req.getParameter("dishid");
-
         Cart cart=new Cart();
         cart.setDishno(dishid);
         User user=(User)req.getSession().getAttribute("user");
         cart.setUserno(user.getUSERNO());
         cart.setDishCount(BigDecimal.valueOf(1));
-        //History history=new History(menu.getDish().getDishid(),menu.getRestaurant().getRestaurantid(),new Date());
-
-        //Order order=new Order(menu,1,Integer.parseInt(getServletContext().getInitParameter("userid")));
-        CartIMPL cartIMPL=new CartIMPL();
+        CartIMPL cartIMPL= new CartIMPL();
         cartIMPL.addObj(cart);
-        try {
-                RequestDispatcher requestDispatcher=req.getRequestDispatcher(
-                        "./CustomerJSP/GetMenues.jsp");
-                //如何舍弃url中原有的“CartServlet.jsp”
-                requestDispatcher.forward(req,resp);
-
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void modifyCart(HttpServletRequest req, HttpServletResponse resp)

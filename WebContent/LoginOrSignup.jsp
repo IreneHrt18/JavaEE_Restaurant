@@ -101,7 +101,7 @@
             </label>
         </div>
         <button class="btn btn-lg btn-success btn-block" type="submit">登陆</button>
-        <a href="./RegisterPage.jsp">注册</a>
+        <button class="btn btn-lg btn-success btn-block" onclick="window.location.href='./RegisterPage.jsp'">注册</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
     </form>
 </body>

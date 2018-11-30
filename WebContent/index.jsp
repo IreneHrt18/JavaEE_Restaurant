@@ -1,3 +1,4 @@
+<%@page import="Bean.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%--
@@ -33,11 +34,6 @@
   <!--
         <link rel="stylesheet" type="text/css" href="styles.css">
         -->
-  <%
-      HttpSession session1=request.getSession(true);
-      session1.setAttribute("userid",Integer.parseInt(request.getServletContext().getInitParameter("userid")));
-      session1.setAttribute("username",request.getServletContext().getInitParameter("username"));
-    %>
 
 </head>
 
@@ -51,7 +47,7 @@
     <div class="collapse navbar-collapse container-fluid" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link text-light" href="./CustomerJSP/RestaurantPage.jsp">商家页 <span class="sr-only">(current)</span></a>
+          <a class="nav-link text-light" href="./CustomerJSP/RestaurantPage.jsp">菜品页 <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-light" href="./CustomerJSP/CartPage.jsp">购物车</a>
@@ -59,16 +55,21 @@
         <li class="nav-item">
           <a class="nav-link text-light" href="./CustomerJSP/HistoryPage.jsp">热门</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="./LoginOrSignup.jsp">登陆/注册</a>
-        </li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="nav-item  ">
-          <a class="disabled text-light" href="<%=request.getContextPath()%>/LoginOrSignup.jsp">欢迎回来，
-            <%=request.getSession().getAttribute("username")%></a>
-        </li>
-      </ul>
+     <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item  ">
+                <% 
+                	User user = (User)request.getSession().getAttribute("user");
+                	String value = "";
+                	if(user == null){
+                		value = "想要点餐就要登录哟~";
+                	}else{
+                		value = user.getUSERNAME();
+                	}
+                %>
+                    <a class="disabled text-light" href="./LoginOrSignup.jsp"><%=value%></a>
+                </li>
+            </ul>
     </div>
   </nav>
   <div class="jumbotron p-3 p-md-5 text-light rounded bg-transparent">

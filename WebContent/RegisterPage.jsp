@@ -5,6 +5,7 @@
   Time: 21:00
   To change this template use File | Settings | File Templates.
 --%>
+<%@page import="Bean.User"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 
@@ -54,14 +55,20 @@
                 <li class="nav-item">
                     <a class="nav-link text-light" href="./CustomerJSP/HistoryPage.jsp">热门</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="./LoginOrSignup.jsp">登陆/注册</a>
-                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="nav-item  ">
-                    <a class="disabled text-light" href="<./LoginOrSignup.jsp">欢迎回来，
-                        <%=request.getSession().getAttribute("username")%></a>
+                    <% 
+                    User user = (User)request.getSession().getAttribute("user");
+                	String value = "";
+                	if(user == null){
+                		value = "想要点餐就要登录哟~";
+                	}else{
+                		value = user.getUSERNAME();
+                	}
+                	%>
+                    <a class="disabled text-light" href="./LoginOrSignup.jsp">
+                        <%=value%></a>
                 </li>
             </ul>
         </div>
