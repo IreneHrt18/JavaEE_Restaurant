@@ -1,6 +1,7 @@
 package JDBC;
 
 import java.sql.Connection;
+import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -128,7 +129,7 @@ public class BaseDAOIMPL extends BaseDAO {
 			pStatement = connection.prepareStatement(sql);
 			if (params != null) {
 				for (int i = 0; i < params.length; i++) {
-					pStatement.setObject(i + 1, params[i]);
+					pStatement.setObject(1, params[i]);
 					pStatement.addBatch();
 				}
 			}
@@ -215,5 +216,32 @@ public class BaseDAOIMPL extends BaseDAO {
 		Helper.free(rSet, pStatement, connection);
 		return rets;
 	}
-
+	/**
+	 * 修改
+	 * @param sql
+	 * @param params
+	 * @return
+	 */
+	public int modifyObj(String sql, Object[] params) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        if(params!=null) {
+        	try {
+                conn = Helper.getConnection();
+                // 创建statement对象
+                ps = conn.prepareStatement(sql);
+                ParameterMetaData pm = ps.getParameterMetaData();
+                for (int i = 1; i <= pm.getParameterCount(); i++) {
+                    ps.setObject(i, params[i-1]);
+                }
+                return ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                Helper.free(rs, ps, conn);
+            }
+        }
+        return 0;
+    }
 }

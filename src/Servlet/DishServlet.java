@@ -3,6 +3,7 @@ package Servlet;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -22,6 +23,8 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
 
 import Bean.Dish;
 import Bean.PageModel;
+import DAO.DeleteDAO;
+import DAO.InsertDAO;
 import DAO.ModifyDAO;
 import DAO.SearchDAO;
 import DAO.SortDAO;
@@ -81,6 +84,9 @@ public class DishServlet extends HttpServlet {
 				return;
 			case "submitModify":
 				submitModify(request, response);
+				return;
+			case "deleteDish":
+				deleteDish(request, response);
 				return;
 			}	
 		}else if(action == null && request.getSession().getAttribute("currentDish")!=null) {
@@ -193,7 +199,7 @@ public class DishServlet extends HttpServlet {
 					fileItem.delete();
 					//修改数库中的菜品对应url
 					ModifyDAO modifyDAO = (ModifyDAO)DAOFactory.newInstance("Dish");
-					String[] params= {properties.getProperty("img") + newFileName,(String)request.getSession().getAttribute("currentDish")};
+					String[] params= {"Image/" + newFileName,(String)request.getSession().getAttribute("currentDish")};
 					modifyDAO.modifyImgUrl(params);
 					request.getSession().removeAttribute("currentDish");
 					}
@@ -216,8 +222,21 @@ public class DishServlet extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	private void jumpToDetail(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		SearchDAO searchDAO = (SearchDAO)DAOFactory.newInstance("Dish");
-		ArrayList<Dish> list = searchDAO.searchByPrimaryKey(request.getParameterValues("dishNo"));
-		request.getSession().setAttribute("dishList", list);
+		if(request.getParameter("dishNo")!=null) {
+			ArrayList<Dish> list = searchDAO.searchByPrimaryKey(request.getParameterValues("dishNo"));
+			request.getSession().setAttribute("dish", list.get(0));
+		}else {
+			Dish dish = new Dish();
+			dish.setDISHNO(String.valueOf(searchDAO.getCount()+1));
+			dish.setDESCRIPTION("请填写描述");
+			dish.setDISHNAME("请填写菜名");
+			dish.setIMG("xx");
+			dish.setPRICE(new BigDecimal(0));
+			InsertDAO insertDAO = (InsertDAO)DAOFactory.newInstance("Dish");
+			String[] params = {dish.getDISHNO(),dish.getDISHNAME(),String.valueOf(dish.getPRICE()),dish.getDESCRIPTION(),dish.getIMG()};
+			insertDAO.insert(params);
+			request.getSession().setAttribute("dish", dish);
+		}
 		response.sendRedirect("./MerchantJSP/DishStatement.jsp");
 	}
 	/**
@@ -231,8 +250,22 @@ public class DishServlet extends HttpServlet {
 		String[] params = {request.getParameter("description"),request.getParameter("dishName"),request.getParameter("price")};
 		ModifyDAO modifyDAO = (ModifyDAO)DAOFactory.newInstance("Dish");
 		modifyDAO.modifyAllByPrimarykey(request.getParameter("dishNo"), params);
-		jumpToDetail(request, response);
+		response.getWriter().println("alert('修改成功')");
+		response.sendRedirect("./MerchantJSP/DishManagementPage.jsp");
 	}
+	/**
+	 * 删除列表项
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	public void deleteDish(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String[] params = request.getParameterValues("dishNo");
+		DeleteDAO deleteDAO = (DeleteDAO)DAOFactory.newInstance("Dish");
+		deleteDAO.deleteByPrimaryKey(params);
+		response.getWriter().println("success");
+	}
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

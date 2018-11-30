@@ -43,10 +43,10 @@ function setIsSort(bool) {
  * 初始化页面
  * @returns void
  */
-$(document).ready(
+$(document).ready(function () {
 	$(document).on("click", ".pageButton", function () {
 		getlist($(this).val());
-	}),
+	});
 	$(document).on("click", "#searchButton", function search() {
 		if ($("[type=search]").val() != "") {
 			setIsSearch(true);
@@ -56,7 +56,7 @@ $(document).ready(
 		} else {
 			initPage();
 		}
-	}),
+	});
 	$(document).on("click", ".nextPage", function nextPage() {
 		currentPage++;
 		if (currentPage <= totalPage) {
@@ -65,7 +65,7 @@ $(document).ready(
 			setCurrentPage(totalPage);
 		}
 		hideButton(currentPage);
-	}),
+	});
 	$(document).on("click", ".prevPage", function prevPage() {
 		currentPage--;
 		if (currentPage >= 1) {
@@ -74,6 +74,7 @@ $(document).ready(
 			setCurrentPage(1);
 		}
 		hideButton(currentPage);
+<<<<<<< HEAD
 	}),
 	// $(document).on("click", "", function sort() {
 	// 	setIsSort(true);
@@ -86,11 +87,55 @@ $(document).ready(
 	// }),
 	initPage()
 );
+=======
+	});
+	$(document).on("click", "#all", function selectAll() {
+		if ($("#all").attr("checked")) {
+			$(".checkbox").attr("checked", true);
+		} else {
+			$(".checkbox").attr("checked", false);
+		}
+	});
+	$(document).on("click", "#deleteDish", function deleteDish() {
+		var dishlist = "";
+		$.each($(".checkbox"), function (index, item) { 
+			 if(item.checked){
+				 dishlist+="dishNo="+item.value+"&";
+			 }
+		});
+		$.ajax({
+			type: "post",
+			url: "../DishServlet?action=deleteDish&"+dishlist,
+			dataType: "text",
+			success: function (response) {
+				
+				initPage();
+			}
+		});
+	});
+	$(document).on("click", ".dropdown-item", function sort() {
+		if (isSort) {
+			setIsSort(false);
+			$(this).html("排名");
+		}
+		else {
+			setIsSort(true);
+			$(this).html("顺序");
+		}
+		getlist(currentPage);
+	});
+	initPage();
+});
+>>>>>>> xiaoshuaima
 /**
  * 初始化页面
  * @returns
  */
 function initPage() {
+	setIsSearch(false);
+	setIsSort(false);
+	this.searchText = "";
+	$(".dropdown-item").html("顺序");
 	$.getJSON("../DishServlet?action=getPageModel",
 		function (data, textStatus, jqXHR) {
 			setCurrentPage(data.currentPageNum);
@@ -99,9 +144,6 @@ function initPage() {
 			getlist(currentPage);
 		}
 	);
-	setIsSearch(false);
-	setIsSort(false);
-	this.searchText = "";
 }
 
 /**
@@ -120,12 +162,12 @@ function getlist(num) {
 			setDishList(url, errorMessage, errorMessage);
 		}
 	} else {
+		setCurrentPage(1);
+		setTotalPage(1);
 		if (isSort == true) {
 			var url = "../DishServlet?action=searchAndSort&searchText=" + searchText;
 			setDishList(url, errorMessage, searchMessage);
 		} else {
-			setCurrentPage(1);
-			setTotalPage(1);
 			var url = "../DishServlet?action=search&searchText=" + searchText;
 			setDishList(url, errorMessage, searchMessage);
 		}
@@ -138,13 +180,20 @@ function getlist(num) {
  * @returns string
  */
 function getListText(item) {
+<<<<<<< HEAD
 	var text = "<tr>" +
 		"<td scope='row'><input type='checkbox' class='checkbox' value="+ item.DISHNO +"></td>"+
 		"<td><a href='../DishServlet?action=jumpToDetail&dishNo="+item.DISHNO+"'>" + item.DISHNO + "</a></td>" +
 		"<td> <a href='../DishServlet?action=jumpToDetail&dishNo="+item.DISHNO+"'>" + item.DISHNAME + "</a></td>" +
+=======
+	var text = "<tr style ='text-align:center'>" +
+		"<td scope='row'><input type='checkbox' class='checkbox' value='" + item.DISHNO + "'></td>" +
+		"<td><a href='../DishServlet?action=jumpToDetail&dishNo=" + item.DISHNO + "'>" + item.DISHNO + "</a></td>" +
+		"<td> <a href='../DishServlet?action=jumpToDetail&dishNo=" + item.DISHNO + "'>" + item.DISHNAME + "</a></td>" +
+>>>>>>> xiaoshuaima
 		"<td>" + item.PRICE + "</td>" +
 		"<td>" + item.DESCRIPTION + "</td>" +
-		"<td><img src=" + item.IMG + " width='50px' height='50px'></td>" +
+		"<td><img src=../" + item.IMG + " width='50px' height='50px'></td>" +
 		"</tr>";
 	return text;
 }
@@ -192,17 +241,19 @@ function hideButton(currentIndex) {
 		} else {
 			$(this).hide();
 		}
+		$(this).css("background-color", "white");
 	});
-	//重新设置首页和尾页
+	//重新设置首页和尾页和颜色
 	$(".pageButton[value='1']").show();
-	$(".pageButton[value=" + totalPage + "]").show();
+	$(".pageButton[value='" + totalPage + "']").show();
+	$(".pageButton[value='" + currentIndex + "']").css("background-color", "aqua");
 	//设置省略号
 	if (parseInt(currentIndex) - parseInt(pageGap) - 1 > 1) {
 		$(".xx span:first").show();
 	} else {
 		$(".xx span:first").hide();
 	}
-	if ((parseInt(currentIndex) + parseInt(pageGap) + 1 < totalPage) && totalPage > pageGap + 2) {
+	if (parseInt(currentIndex) + parseInt(pageGap) + 1 < parseInt(totalPage) && totalPage > pageGap + 2) {
 		$(".xx span:last").show();
 	} else {
 		$(".xx span:last").hide();

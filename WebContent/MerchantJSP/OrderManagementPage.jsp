@@ -97,7 +97,28 @@
 		<tbody id="dishlist">
 
 		</tbody>
-	</table></div>
+	</table>
+	</div>
+	<div class="xx" style="position:relative;margin: 0 50% auto 50%;">
+	<nav aria-label="Page navigation example">	
+	 <ul class="pagination justify-content-end">
+	
+		<li class="page-item"><button class="prevPage page-link">上一页</button></li>
+		
+		<%PageModel pageModel = new PageModel(3); %>
+		<%  for(int i = 0;i<pageModel.getTotalPageNum();i++){ %>
+		<li class="page-item"><button class="pageButton page-link" value="<%=i+1 %>">
+		
+			<%=i+1 %> </button></li>
+		<% if(i==0||i==pageModel.getTotalPageNum()-2){ %>
+		<span class="page-link">...</span>
+		<% } %>
+		<% } %>
+		<li class="page-item"><button class="nextPage page-link">下一页</button></li>
+		    </li>
+  		</ul>
+		
+	</div>
 </body>
 
 </html>

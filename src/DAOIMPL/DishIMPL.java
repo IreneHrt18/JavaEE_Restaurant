@@ -4,21 +4,30 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import Bean.Dish;
+import DAO.DeleteDAO;
+import DAO.InsertDAO;
 import DAO.ModifyDAO;
 import DAO.SearchDAO;
 import DAO.SortDAO;
 import JDBC.BaseDAO;
 import JDBC.DAOFactory;
 
-public class DishIMPL implements SearchDAO,SortDAO,ModifyDAO {
+public class DishIMPL implements SearchDAO,SortDAO,ModifyDAO,DeleteDAO,InsertDAO {
 
 	@SuppressWarnings("rawtypes")
 	@Override
 	public ArrayList searchAll() {
 		// TODO Auto-generated method stub
-		return null;
-	}
+		BaseDAO baseDAO = (BaseDAO)DAOFactory.newInstance("BaseDAO");
+		String sql = "select * from dish ";
 
+		ArrayList list = baseDAO.searchOBJ(sql,Dish.class);
+		return list;
+	}
+	public ArrayList<Dish> sortAll(ArrayList<Dish> dishes,int order) {
+		dishes.sort(new Dish.DishCompar(order));
+		return dishes;
+	}
 	@SuppressWarnings("rawtypes")
 	@Override
 	public ArrayList searchByPrimaryKey(String[] params) {
@@ -156,6 +165,41 @@ public class DishIMPL implements SearchDAO,SortDAO,ModifyDAO {
 		String sql = "update dish set DESCRIPTION = ? ,DISHNAME = ? ,PRICE = ? where dishno = "+primary;
 		BaseDAO baseDAO = (BaseDAO)DAOFactory.newInstance("BaseDAO");
 		return baseDAO.singleSQL(sql, params);
+	}
+
+	@Override
+	public int[] deleteByPrimaryKey(String[] primaryKey) {
+		// TODO 删除dish
+		BaseDAO baseDAO = (BaseDAO)DAOFactory.newInstance("BaseDAO");
+		String sql = "delete from dish  where dishno = ?";
+		return baseDAO.multipleSQL(sql, primaryKey);
+	}
+
+	@Override
+	public void insert(String[] params) {
+		// TODO 插入记录
+		String sql = " insert into dish(dishNo, dishName, price, description,img) "
+				+ "values( ?,?,?,?,?)";
+		BaseDAO baseDAO = (BaseDAO)DAOFactory.newInstance("BaseDAO");
+		baseDAO.singleSQL(sql, params);
+	}
+
+	@Override
+	public boolean alterObj(Object obj) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteObj(Object obj) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addObj(Object obj) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

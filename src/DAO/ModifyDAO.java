@@ -14,4 +14,16 @@ public interface ModifyDAO {
 	 * @return
 	 */
 	public int modifyAllByPrimarykey(String primary,String[] params);
+	/**
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	public boolean alterObj(Object obj);
+	/**
+	 * 
+	 * @param obj
+	 * @return
+	 */
+    public boolean deleteObj(Object obj);
 }
